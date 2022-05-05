@@ -6,6 +6,7 @@ export default interface NetworkRepository {
     /**
      * @throws {Error} if validation has not passed 
       */
+
      calculateAvgDegree(networkResult: NetworkContainerResult):
      Promise<NetworkInfoResult>;
 
@@ -14,4 +15,10 @@ export default interface NetworkRepository {
 
      calculateAvgCloseness(networkResult: NetworkContainerResult):
      Promise<NetworkInfoResult>;
+
+     listDefaultNetworks():
+     Promise<String[]>;
+
+     loadDefaultNetwork(filename: string):
+     Promise<NetworkContainerResult>;
 }
