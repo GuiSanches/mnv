@@ -21,4 +21,10 @@ export default interface NetworkRepository {
 
      loadDefaultNetwork(filename: string):
      Promise<NetworkContainerResult>;
+
+     uploadJsonNetwork(filename: string):
+     Promise<NetworkContainerResult>;
+
+     uploadNcolNetwork(filename: string):
+     Promise<NetworkContainerResult>;
 }

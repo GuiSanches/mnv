@@ -19,7 +19,7 @@ interface NetworkContainerResultResponse {
 }
 
 export default class NetworkApi implements NetworkRepository {
-    private API_URL = 'http://localhost:5000'
+    private API_URL = 'https://mnv-backend.herokuapp.com'
     private client: AxiosInstance
 
     public constructor() {
@@ -65,6 +65,26 @@ export default class NetworkApi implements NetworkRepository {
     }
 
     async loadDefaultNetwork(filename: string): Promise<NetworkContainerResult> {
+        const { data }: NetworkContainerResultResponse = await this.client.get('/load_default_network', {
+            data: {
+                filename
+            }
+        });
+
+        return data
+    }
+
+    async uploadJsonNetwork(filename: string): Promise<NetworkContainerResult> {
+        const { data }: NetworkContainerResultResponse = await this.client.get('/load_default_network', {
+            data: {
+                filename
+            }
+        });
+
+        return data
+    }
+
+    async uploadNcolNetwork(filename: string): Promise<NetworkContainerResult> {
         const { data }: NetworkContainerResultResponse = await this.client.get('/load_default_network', {
             data: {
                 filename
