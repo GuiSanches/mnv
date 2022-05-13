@@ -1,12 +1,12 @@
 import { Position } from "./common";
 
 export interface NodeResult {
-    id: bigint;
+    id: BigInt;
     weight: number;
     shape: string;
-    type: bigint;
+    type: BigInt;
     position: Position;
     size: number;
-    membership?: bigint;
-    target: bigint;
+    membership?: BigInt;
+    target: BigInt;
 }

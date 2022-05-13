@@ -18,6 +18,7 @@ export default class NetworkHolder {
 
     public onNetworkContainerChanged(network: NetworkContainerResult) : void {
         this.network.network = network;
+        this.onNetworkInfoChanged({})
         this.notifyListeners();
     }
 
