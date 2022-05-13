@@ -4,7 +4,6 @@ import Image from 'next/image'
 import Tester from '../src/data/Network/index'
 import Header from '../src/Sections/Header'
 import styles from '../styles/Home.module.css'
-import { Wrapper } from './global'
 
 const Home: NextPage = () => {
 
@@ -15,9 +14,7 @@ const Home: NextPage = () => {
         <meta name="description" content="MNV Application" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Wrapper>
-        <Header />
-      </Wrapper >
+      <Header />
     </div>
   )
 }
