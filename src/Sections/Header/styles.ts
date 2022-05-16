@@ -20,7 +20,6 @@ export const Container = styled.header`
 export const Nav = styled.nav`
     display: flex;
     flex-basis: auto;
-    flex-grow: 1;
     align-items: center;
     margin: 0;
     font-family: 'Lato', sans-serif;
@@ -33,11 +32,13 @@ export const Nav = styled.nav`
 
 export const NavbarNav = styled.ul`
     display: flex;
+    flex: 1;
     flex-direction: row;
     padding-left: 0;
     margin-bottom: 0;
     margin-top: 0;
     list-style: none;
+    justify-content: space-around;
 `
 
 export const NavItem = styled.li`

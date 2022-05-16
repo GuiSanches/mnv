@@ -1,22 +1,34 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { LoadNetworkComponentProps } from "../../presentation/view/LoadNetwork/LoadNetworkComponent";
-import { NavItem } from "./styles";
+import Modal from "../Modal";
+import { NavItem, NavLink } from "./styles";
 
 interface Props<T extends object> {
-    isKeep: boolean;
-    isOpen: boolean;
+    isKeep?: boolean;
+    isOpen?: boolean;
     viewModel: any;
-    Modal: FC<T>;
+    Component: FC<T>;
     title: string;
 }
 
-const Navitem = <T extends object>({ Modal, title, viewModel, isOpen, isKeep }: Props<T>) => {
+const Navitem = <T extends object>({ Component, title, viewModel }: Props<T>) => {
+    const [Open, setOpen] = useState<boolean>(false)
+
+    const handleItemClick = () => {
+        setOpen(!Open);
+    }
+
+    const content = () => <Component {...viewModel} />
 
     return (
         <>
-            <NavItem>{title}</NavItem>
-            
-            {isOpen && <Modal {...viewModel} />}
+            <NavItem>
+                <NavLink onClick={() => handleItemClick()}>
+                    {title}
+                </NavLink>
+            </NavItem>
+
+            {Open && <Modal setOpen={setOpen} content={content()} idPortal="__next" />}
         </>
     )
 }

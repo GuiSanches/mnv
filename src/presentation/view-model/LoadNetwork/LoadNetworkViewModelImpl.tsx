@@ -1,10 +1,11 @@
 import NetworkHolder from "../../../domain/entity/Network/models/NetworkHolder";
+import NetworkListener from "../../../domain/entity/Network/models/NetworkListener";
 import LoadNetworksUseCase from "../../../domain/interactors/Network/LoadingNetwork/LoadNetworksUseCase";
 import BaseView from "../../view/BaseView";
 import LoadNetworkViewModel from "./LoadNetworkViewModel";
 
 
-export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel {
+export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, NetworkListener {
     public JsonFile: string;
     public defaultNetwork: string;
     public isKeep: boolean;
@@ -26,6 +27,8 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel {
 
         this.loadNetworksUseCase = loadNetworksUseCase;
         this.networkHolder = networkHolder;
+
+        this.networkHolder.addNetworkListener(this);
     }    
 
     public onBrowseFile(extension: string): void {
@@ -45,7 +48,7 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel {
     }
 
     public onNetworkChanged(): void {
-        
+        console.log(this.networkHolder.getNetwork());
     }
 
     public onUploadJsonFile(): void {

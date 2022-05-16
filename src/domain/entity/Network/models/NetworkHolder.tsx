@@ -22,6 +22,10 @@ export default class NetworkHolder {
         this.notifyListeners();
     }
 
+    public getNetwork() {
+        return this.network;
+    }
+
     public onNetworkInfoChanged(networkInfoResult: NetworkInfoResult) : void {
         this.network.Info = networkInfoResult;
         this.notifyListeners();
