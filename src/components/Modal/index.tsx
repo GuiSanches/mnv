@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useEffect, useState } from "react";
+import React, { FC, ReactNode, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Draggable from "react-draggable";
 import { CloseHeader, CloseIcon, CloseLabel, ModalContainer } from "./styles";
@@ -11,6 +11,7 @@ interface Props {
 
 const Modal: FC<Props> = ({ setOpen, content, idPortal }) => {
     const [message, setMessage] = useState<'KEEP' | 'DISPLACE'>('KEEP')
+    const nodeRef = useRef(null);
     useEffect(() => {
         document.body.style.overflow = 'hidden';
 
@@ -32,8 +33,8 @@ const Modal: FC<Props> = ({ setOpen, content, idPortal }) => {
     return (
         id &&
         createPortal(
-            <Draggable>
-                <ModalContainer>
+            <Draggable nodeRef={nodeRef}>
+                <ModalContainer ref={nodeRef}>
                     <CloseHeader>
                         <CloseLabel onClick={() => handleKeep()}>{message}</CloseLabel>
                         <CloseIcon onClick={() => handleClose()} />

@@ -24,7 +24,8 @@ const LoadNetworkComponent: FC<LoadNetworkComponentProps> = ({ loadNetworkViewMo
 
     return (
         <LoadingContainer>
-            <DefaultNetwork options={loadNetworkViewModel.defaultNetwork} onLoadNetwork={loadNetworkViewModel.onLoadDefaultNetwork}/>
+            {!isLoaded && <DefaultNetwork options={loadNetworkViewModel.defaultNetwork} onLoadNetwork={loadNetworkViewModel.onLoadDefaultNetwork}/>}
+            
 
         </LoadingContainer>
     )
