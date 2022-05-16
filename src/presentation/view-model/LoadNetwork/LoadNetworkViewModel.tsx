@@ -10,7 +10,8 @@ export default interface LoadNetworkViewModel extends BaseModalModel {
     nColFileType: string;
     onLoadnColFile() : void;
 
-    defaultNetwork: string;
+    defaultNetwork: string[];
+    LoadDefaultNetwork(): void;
     onLoadDefaultNetwork(filename: string) : void;
 
     onBrowseFile(extension: string) : void;

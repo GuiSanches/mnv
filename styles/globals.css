@@ -16,6 +16,10 @@ a {
 }
 
 * {
+  /* font-family: 'Lato', sans-serif; */
+    font-size: 14px;
+    margin:0; padding:0;
+    outline: 0;
   box-sizing: border-box;
 }
 
@@ -24,3 +28,9 @@ a {
   box-sizing: border-box;
 }
 
+span.span-125 {
+  min-width: 125px;
+  float: right;
+  text-align: right;
+  white-space: nowrap;
+}

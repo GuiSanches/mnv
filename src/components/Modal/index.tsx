@@ -3,7 +3,6 @@ import { createPortal } from "react-dom";
 import Draggable from "react-draggable";
 import { CloseHeader, CloseIcon, CloseLabel, ModalContainer } from "./styles";
 
-
 interface Props {
     content: ReactNode;
     idPortal: string;

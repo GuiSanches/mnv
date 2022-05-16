@@ -7,7 +7,7 @@ import LoadNetworkViewModel from "./LoadNetworkViewModel";
 
 export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, NetworkListener {
     public JsonFile: string;
-    public defaultNetwork: string;
+    public defaultNetwork: string[];
     public isKeep: boolean;
     public nColFile: string;
     public nColFileType: string;
@@ -20,7 +20,7 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
     public constructor(loadNetworksUseCase: LoadNetworksUseCase, networkHolder: NetworkHolder) {
         this.isLoaded = false;
         this.JsonFile = '';
-        this.defaultNetwork = '';
+        this.defaultNetwork = [''];
         this.isKeep = false;
         this.nColFile = '';
         this.nColFileType = '';
@@ -35,11 +35,16 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
         
     }
 
-    async onLoadDefaultNetwork(filename: string) {
+    public LoadDefaultNetwork = async () => {
+        this.defaultNetwork = ['n-reactome-small', 'n-reactome-large']
+        this.notifyViewAboutChanges()
+    }
+
+    public onLoadDefaultNetwork = async (filename: string) => {
         await this.loadNetworksUseCase.loadDefaultNetwork.loadDefaultNetwork(filename);
     }
 
-    public onLoadnColFile(): void {
+    public onLoadnColFile = (): void => {
         
     }
 
