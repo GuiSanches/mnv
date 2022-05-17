@@ -8,25 +8,27 @@ import NetworkRepository from '../../domain/repository/Network/NetworkRepository
 const networkHolder: NetworkHolder = new NetworkHolder()
 const networkRepository: NetworkRepository = new NetworkApi()
 
+interface CtxType {
+    networkHolder: NetworkHolder,
+    networkRepository: NetworkRepository,
+    setNetworkHolder?: React.Dispatch<React.SetStateAction<NetworkHolder>>
+}
 const DEFAULT_VALUE = {
     "networkHolder": networkHolder,
-    "networkRepository": networkRepository
+    "networkRepository": networkRepository,
 }
 
-export const NetworkCtx = createContext(DEFAULT_VALUE)
+export const NetworkCtx = createContext<CtxType>(DEFAULT_VALUE)
 const NetworkProvider = NetworkCtx.Provider
 const NetworkConsumer = NetworkCtx.Consumer
 
 export const NetworkContext: React.FC<{ children?: React.ReactChild }> = ({ children }) => {
     const [networkHolder, setNetworkHolder] = useState(DEFAULT_VALUE.networkHolder);
 
-    useEffect(() => {
-        setNetworkHolder(networkHolder)
-    }, [networkHolder])
-
     return (
         <NetworkProvider value={{
             networkHolder,
+            setNetworkHolder,
             networkRepository: DEFAULT_VALUE.networkRepository
         }}>
             {children}

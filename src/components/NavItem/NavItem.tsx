@@ -1,24 +1,23 @@
-import { FC, useState } from "react";
-import { LoadNetworkComponentProps } from "../../presentation/view/LoadNetwork/LoadNetworkComponent";
+import { FC, useEffect, useMemo, useState } from "react";
 import Modal from "../Modal";
 import { NavItem, NavLink } from "./styles";
 
 interface Props<T extends object> {
     isKeep?: boolean;
     isOpen?: boolean;
-    viewModel: any;
-    Component: FC<T>;
+    Component: FC;
     title: string;
 }
 
-const Navitem = <T extends object>({ Component, title, viewModel }: Props<T>) => {
+const Navitem = <T extends object>({ Component, title }: Props<T>) => {
     const [Open, setOpen] = useState<boolean>(false)
-
     const handleItemClick = () => {
         setOpen(!Open);
     }
 
-    const content = () => <Component {...viewModel} />
+    const content = useMemo(() => {
+        return <Component />
+    }, [])
 
     return (
         <>
@@ -28,7 +27,7 @@ const Navitem = <T extends object>({ Component, title, viewModel }: Props<T>) =>
                 </NavLink>
             </NavItem>
 
-            {Open && <Modal setOpen={setOpen} content={content()} idPortal="__next" />}
+            {Open && <Modal setOpen={setOpen} content={content} idPortal="__next" />}
         </>
     )
 }

@@ -33,7 +33,7 @@ const Modal: FC<Props> = ({ setOpen, content, idPortal }) => {
     return (
         id &&
         createPortal(
-            <Draggable nodeRef={nodeRef}>
+            <Draggable nodeRef={nodeRef} >
                 <ModalContainer ref={nodeRef}>
                     <CloseHeader>
                         <CloseLabel onClick={() => handleKeep()}>{message}</CloseLabel>

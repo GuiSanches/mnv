@@ -13,7 +13,7 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
     public nColFileType: string;
     isLoaded: boolean;
 
-    private baseView?: BaseView;
+    public baseView?: BaseView;
     private loadNetworksUseCase: LoadNetworksUseCase;
     private networkHolder: NetworkHolder;
 
@@ -31,7 +31,7 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
         this.networkHolder.addNetworkListener(this);
     }    
 
-    public onBrowseFile(extension: string): void {
+    public onBrowseFile = (extension: string): void => {
         
     }
 
@@ -50,23 +50,23 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
         
     }
 
-    public onModalClick(): void {
+    public onModalClick = (): void => {
         
     }
 
-    public onNetworkChanged(): void {
+    public onNetworkChanged = (): void => {
         console.log(this.networkHolder.getNetwork());
     }
 
-    public onUploadJsonFile(): void {
+    public onUploadJsonFile = (): void => {
         
     }
 
-    public attachView(baseView: BaseView): void {
+    public attachView = (baseView: BaseView): void => {
         this.baseView = baseView;
     }
 
-    public detachView(): void { 
+    public detachView = (): void => { 
         this.baseView = undefined;
     }
 

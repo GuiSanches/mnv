@@ -1,4 +1,5 @@
 import NetworkContainerResult from "../../../domain/entity/Network/structures/NetworkContainerResult";
+import BaseView from "../../view/BaseView";
 import BaseModalModel from "../BaseModalModel";
 
 export default interface LoadNetworkViewModel extends BaseModalModel {
@@ -15,4 +16,6 @@ export default interface LoadNetworkViewModel extends BaseModalModel {
     onLoadDefaultNetwork(filename: string) : void;
 
     onBrowseFile(extension: string) : void;
+
+    baseView?: BaseView;
 }

@@ -10,10 +10,11 @@ class LoadNetworkInheritance implements BaseView {
     }
 }
 
-const useLoadNetwork = (loadNetworkViewModel: LoadNetworkViewModel) => {
+const useLoadNetwork = (loadNetworkViewModel: LoadNetworkViewModel) : [boolean, () => void]=> {
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
     const onViewModelChanged = () => {
+        console.log('runned')
         setIsLoaded(loadNetworkViewModel.isLoaded)
     }
 

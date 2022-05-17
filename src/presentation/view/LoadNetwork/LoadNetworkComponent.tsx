@@ -1,34 +1,49 @@
-import React, { FC, useContext, useEffect } from "react";
+import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import { InputGroupPrepend, InputGroupText, Label, Line } from "../../../../styles/global";
 import Modal, { withModal } from "../../../components/Modal";
+import LoadNetworksUseCase from "../../../domain/interactors/Network/LoadingNetwork/LoadNetworksUseCase";
 import { NetworkCtx } from "../../util/NetworkCtx";
 import LoadNetworkViewModel from "../../view-model/LoadNetwork/LoadNetworkViewModel";
+import LoadNetworkViewModelImpl from "../../view-model/LoadNetwork/LoadNetworkViewModelImpl";
+import BaseView from "../BaseView";
 import DefaultNetwork from "./DefaultNetwork";
-import withLoadNetworkInheritance from "./HOC/withLoadNetworkInheritance";
 import useLoadNetwork from "./hooks/useLoadNetwork";
-import { LoadingContainer, Container } from "./styles";
+import { LoadingContainer } from "./styles";
 
-export interface LoadNetworkComponentProps {
-    loadNetworkViewModel: LoadNetworkViewModel;
-    artificialExtending: ReturnType<typeof useLoadNetwork>;
-}
 
-const LoadNetworkComponent: FC<LoadNetworkComponentProps> = ({ loadNetworkViewModel, artificialExtending }) => {
-    const [isLoaded, onViewModelChanged] = artificialExtending;
+const LoadNetworkComponent: FC = () => {
+    const [update, setUpdate] = useState<boolean>(false);
+    const { networkHolder, networkRepository, setNetworkHolder } = useContext(NetworkCtx)
 
-    const ctx = useContext(NetworkCtx)
+    const baseView: BaseView = useMemo(() => {
+        const onViewModelChanged = () => {
+            setUpdate(!update)
+        }
+
+        return ({
+            onViewModelChanged
+        })
+    }, []);
+
+    const loadNetworksUseCase: LoadNetworksUseCase = new LoadNetworksUseCase(networkRepository, networkHolder);
+    const [loadNetworkViewModel, setLoadNetworkViewModel] = useState<LoadNetworkViewModel>(
+        new LoadNetworkViewModelImpl(loadNetworksUseCase, networkHolder)
+    );
+
     useEffect(() => {
-        console.log(loadNetworkViewModel)
+        loadNetworkViewModel.attachView(baseView)
         loadNetworkViewModel.LoadDefaultNetwork()
-    }, [loadNetworkViewModel])
+    }, [])
+
 
     return (
         <LoadingContainer>
-            {!isLoaded && <DefaultNetwork options={loadNetworkViewModel.defaultNetwork} onLoadNetwork={loadNetworkViewModel.onLoadDefaultNetwork}/>}
-            
+            <DefaultNetwork
+                options={loadNetworkViewModel.defaultNetwork}
+                onLoadNetwork={loadNetworkViewModel.onLoadDefaultNetwork} />
 
         </LoadingContainer>
     )
 }
 
-export default withLoadNetworkInheritance(LoadNetworkComponent)
+export default LoadNetworkComponent
