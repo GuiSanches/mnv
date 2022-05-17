@@ -17,7 +17,7 @@ export default interface NetworkRepository {
      Promise<NetworkInfoResult>;
 
      listDefaultNetworks():
-     Promise<String[]>;
+     Promise<string[]>;
 
      loadDefaultNetwork(filename: string):
      Promise<NetworkContainerResult>;

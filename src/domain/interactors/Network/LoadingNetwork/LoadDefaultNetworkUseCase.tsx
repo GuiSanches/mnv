@@ -11,6 +11,11 @@ export default class LoadDefaultNetworkUseCase {
         this.networkRepository = networkRepository;
     }
 
+    public async getDefaultNetworkList() {
+        const networkOptions = await this.networkRepository.listDefaultNetworks();
+        return networkOptions;
+    }
+
     public async loadDefaultNetwork(filename: string) {
         const networkContainerResult : NetworkContainerResult = await this.networkRepository.loadDefaultNetwork(filename);
 

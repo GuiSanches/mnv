@@ -7,7 +7,8 @@ import LoadNetworkViewModel from "./LoadNetworkViewModel";
 
 export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, NetworkListener {
     public JsonFile: string;
-    public defaultNetwork: string[];
+    public defaultNetwork: string;
+    public defaultNetworkOptions: string[];
     public isKeep: boolean;
     public nColFile: string;
     public nColFileType: string;
@@ -20,23 +21,26 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
     public constructor(loadNetworksUseCase: LoadNetworksUseCase, networkHolder: NetworkHolder) {
         this.isLoaded = false;
         this.JsonFile = '';
-        this.defaultNetwork = [''];
+        this.defaultNetwork = '';
         this.isKeep = false;
         this.nColFile = '';
         this.nColFileType = '';
 
         this.loadNetworksUseCase = loadNetworksUseCase;
         this.networkHolder = networkHolder;
+        this.defaultNetworkOptions = ['']
 
+        this.ListDefaultNetworks()
         this.networkHolder.addNetworkListener(this);
-    }    
-
-    public onBrowseFile = (extension: string): void => {
-        
     }
 
-    public LoadDefaultNetwork = async () => {
-        this.defaultNetwork = ['n-reactome-small', 'n-reactome-large']
+
+    public onBrowseFile = (extension: string): void => {
+
+    }
+
+    private ListDefaultNetworks = async () => {
+        this.defaultNetworkOptions = await this.loadNetworksUseCase.loadDefaultNetwork.getDefaultNetworkList()
         this.notifyViewAboutChanges()
     }
 
@@ -47,11 +51,11 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
     }
 
     public onLoadnColFile = (): void => {
-        
+
     }
 
     public onModalClick = (): void => {
-        
+
     }
 
     public onNetworkChanged = (): void => {
@@ -59,21 +63,21 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
     }
 
     public onUploadJsonFile = (): void => {
-        
+
     }
 
     public attachView = (baseView: BaseView): void => {
         this.baseView = baseView;
     }
 
-    public detachView = (): void => { 
+    public detachView = (): void => {
         this.baseView = undefined;
     }
 
     private notifyViewAboutChanges = (): void => {
         if (this.baseView) {
-          this.baseView.onViewModelChanged();
+            this.baseView.onViewModelChanged();
         }
-      };
+    };
 
 }

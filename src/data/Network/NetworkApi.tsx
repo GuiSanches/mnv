@@ -10,7 +10,7 @@ interface NetworkInfoResultResponse {
 
 interface ListNetworkResponse {
     data: {
-        filenames: String[]
+        filenames: string[]
     }
 }
 
@@ -58,7 +58,7 @@ export default class NetworkApi implements NetworkRepository {
         return data
     }
 
-    async listDefaultNetworks(): Promise<String[]> {
+    async listDefaultNetworks(): Promise<string[]> {
         const { data }: ListNetworkResponse = await this.client.get('/list_default_networks');
 
         return data.filenames
