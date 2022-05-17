@@ -5,7 +5,6 @@ import LoadNetworkComponent from "../../presentation/view/LoadNetwork/LoadNetwor
 
 import { Container, Nav, NavbarNav } from './styles';
 
-
 const Header: FC = () => (
     <NetworkContext>
         <Container>

@@ -34,7 +34,6 @@ const LoadNetworkComponent: FC = () => {
         viewModel.attachView(baseView);
     }, [])
 
-
     return (
         <LoadingContainer>
             {loadNetworkViewModel &&

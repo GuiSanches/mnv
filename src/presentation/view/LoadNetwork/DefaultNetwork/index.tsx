@@ -18,7 +18,6 @@ const DefaultNetwork: FC<Props> = ({ onLoadNetwork, options }) => {
   }
 
   const handleSubmit = (e: MouseEvent<HTMLInputElement>) => {
-    console.log(selectedValue, 'oi');
     e.preventDefault();
     onLoadNetwork(selectedValue);
   }

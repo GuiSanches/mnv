@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Tester from '../src/data/Network/index'
+import Canvas from '../src/Sections/Canvas'
 import Header from '../src/Sections/Header'
 import styles from '../styles/Home.module.css'
 
@@ -15,6 +16,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
+
+      <Canvas />
     </div>
   )
 }
