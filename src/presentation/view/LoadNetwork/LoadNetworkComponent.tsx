@@ -10,7 +10,7 @@ import { LoadingContainer } from "./styles";
 
 const LoadNetworkComponent: FC = () => {
     const [update, setUpdate] = useState<boolean>(false);
-    const { networkHolder, networkRepository, setNetworkHolder } = useContext(NetworkCtx);
+    const { networkHolder, networkRepository } = useContext(NetworkCtx);
 
     const baseView: BaseView = useMemo(() => {
         const onViewModelChanged = () => {
@@ -22,24 +22,29 @@ const LoadNetworkComponent: FC = () => {
         })
     }, []);
 
-    const loadNetworksUseCase: LoadNetworksUseCase = new LoadNetworksUseCase(networkRepository, networkHolder);
-    const [loadNetworkViewModel, setLoadNetworkViewModel] = useState<LoadNetworkViewModel>(
-        new LoadNetworkViewModelImpl(loadNetworksUseCase, networkHolder)
-    );
+
+    const [loadNetworkViewModel, setLoadNetworkViewModel] = useState<LoadNetworkViewModel>();
 
     useEffect(() => {
-        loadNetworkViewModel.attachView(baseView);
+        const loadNetworksUseCase: LoadNetworksUseCase = new LoadNetworksUseCase(networkRepository, networkHolder);
+        const viewModel = (
+            new LoadNetworkViewModelImpl(loadNetworksUseCase, networkHolder)
+        )
+        setLoadNetworkViewModel(viewModel)
+        viewModel.attachView(baseView);
     }, [])
 
 
     return (
         <LoadingContainer>
-            <DefaultNetwork
-                options={loadNetworkViewModel.defaultNetworkOptions}
-                onLoadNetwork={loadNetworkViewModel.onLoadDefaultNetwork} />
+            {loadNetworkViewModel &&
+                <DefaultNetwork
+                    options={loadNetworkViewModel.defaultNetworkOptions}
+                    onLoadNetwork={loadNetworkViewModel.onLoadDefaultNetwork} />
+            }
 
         </LoadingContainer>
-    )
+    );
 }
 
 export default LoadNetworkComponent
