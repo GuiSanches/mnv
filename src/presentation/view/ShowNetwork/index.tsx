@@ -29,10 +29,8 @@ const ShowNetworkComponent: FC = () => {
     }, [update])
 
     useEffect(() => {
-        return () => {
-            const viewModel = new ShowNetworkViewModelImpl(networkHolder);
-            setShowNetworkViewModel(viewModel);
-        }
+        const viewModel = new ShowNetworkViewModelImpl(networkHolder);
+        setShowNetworkViewModel(viewModel);
     }, []);
 
     useEffect(() => {
