@@ -48,6 +48,7 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
     }
 
     public onLoadDefaultNetwork = async (filename: string) => {
+        console.log('loaded')
         await this.loadNetworksUseCase.loadDefaultNetwork.loadDefaultNetwork(filename);
     }
 
@@ -60,7 +61,7 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
     }
 
     public onNetworkChanged = (): void => {
-        console.log(this.networkHolder.getNetwork());
+        // console.log(this.networkHolder.getNetwork());
     }
 
     public onUploadJsonFile = (): void => {

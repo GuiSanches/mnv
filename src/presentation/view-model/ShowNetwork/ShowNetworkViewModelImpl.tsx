@@ -16,13 +16,14 @@ export default class ShowNetworkViewModelImpl implements ShowNetworkViewModel, N
         this.networkHolder.addNetworkListener(this);
     }
 
-    public onNetworkChanged(): void {
+    public onNetworkChanged = (): void => {
         this.notifyViewAboutChanges();
     }
-    public attachView(baseView: BaseView): void {
+    
+    public attachView = (baseView: BaseView): void => {
         this.baseView = baseView;
     }
-    public detachView(): void {
+    public detachView = (): void => {
         this.baseView = undefined;
     }
 
