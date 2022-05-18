@@ -49,10 +49,11 @@ const LoadNetworkComponent: FC = () => {
 
     return (
         <LoadingContainer>
-            {loadNetworkViewModel &&
+            {loadNetworkViewModel ? 
                 <DefaultNetwork
                     options={loadNetworkViewModel.defaultNetworkOptions}
-                    onLoadNetwork={loadNetworkViewModel.onLoadDefaultNetwork} />
+                    onLoadNetwork={loadNetworkViewModel.onLoadDefaultNetwork} /> :
+                    <span>Carregando</span>
             }
 
         </LoadingContainer>
