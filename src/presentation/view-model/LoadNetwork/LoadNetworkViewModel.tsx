@@ -13,6 +13,7 @@ export default interface LoadNetworkViewModel extends BaseModalModel {
 
     defaultNetwork: string;
     defaultNetworkOptions: string[]
+    ListDefaultNetworks(): void
     onLoadDefaultNetwork(filename: string) : void;
 
     onBrowseFile(extension: string) : void;

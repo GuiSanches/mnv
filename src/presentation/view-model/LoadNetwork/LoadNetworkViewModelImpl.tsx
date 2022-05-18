@@ -30,7 +30,6 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
         this.networkHolder = networkHolder;
         this.defaultNetworkOptions = ['']
 
-        this.ListDefaultNetworks()
         this.networkHolder.addNetworkListener(this);
     }
 
@@ -39,9 +38,9 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
 
     }
 
-    private ListDefaultNetworks = async () => {
-        this.defaultNetworkOptions = await this.loadNetworksUseCase.loadDefaultNetwork.getDefaultNetworkList()
-        this.notifyViewAboutChanges()
+    public ListDefaultNetworks = async () => {
+        this.defaultNetworkOptions = await this.loadNetworksUseCase.loadDefaultNetwork.getDefaultNetworkList();
+        this.notifyViewAboutChanges();
     }
 
     public onLoadDefaultNetwork = async (filename: string) => {

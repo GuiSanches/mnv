@@ -12,26 +12,19 @@ const LoadNetworkComponent: FC = () => {
     const [update, setUpdate] = useState<boolean>(false);
     const { networkHolder, networkRepository } = useContext(NetworkCtx);
 
-    const baseView: BaseView = useMemo(() => {
-        const onViewModelChanged = () => {
+    const baseView: BaseView = ({
+        onViewModelChanged: () => {
             setUpdate(!update);
         }
+    })
 
-        return ({
-            onViewModelChanged
-        })
-    }, []);
+    const loadNetworksUseCase: LoadNetworksUseCase = new LoadNetworksUseCase(networkRepository, networkHolder);
 
-
-    const [loadNetworkViewModel, setLoadNetworkViewModel] = useState<LoadNetworkViewModel>();
+    const [loadNetworkViewModel, setLoadNetworkViewModel] = useState<LoadNetworkViewModel>(new LoadNetworkViewModelImpl(loadNetworksUseCase, networkHolder));
 
     useEffect(() => {
-        const loadNetworksUseCase: LoadNetworksUseCase = new LoadNetworksUseCase(networkRepository, networkHolder);
-        const viewModel = (
-            new LoadNetworkViewModelImpl(loadNetworksUseCase, networkHolder)
-        )
-        setLoadNetworkViewModel(viewModel)
-        viewModel.attachView(baseView);
+        loadNetworkViewModel.attachView(baseView);
+        loadNetworkViewModel.ListDefaultNetworks();
     }, [])
 
     return (
