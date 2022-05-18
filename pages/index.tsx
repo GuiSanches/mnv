@@ -9,7 +9,7 @@ import styles from '../styles/Home.module.css'
 const Home: NextPage = () => {
 
   return (
-    <div>
+    <div style={{position: 'relative'}}>
       <Head>
         <title>MNV - web interface for large scale Networks</title>
         <meta name="description" content="MNV Application" />

@@ -13,6 +13,7 @@ export const ModalContainer = styled.div`
   border-radius: 0.25rem;
   cursor: move;
   background-color: #f8f9fa;
+  top: 40px;
 `;
 
 export const CloseHeader = styled.div`
