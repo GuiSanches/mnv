@@ -16,16 +16,26 @@ const LoadNetworkComponent: FC = () => {
         onViewModelChanged: () => {
             setUpdate(!update);
         }
-    })
+    });
 
-    const loadNetworksUseCase: LoadNetworksUseCase = new LoadNetworksUseCase(networkRepository, networkHolder);
-
-    const [loadNetworkViewModel, setLoadNetworkViewModel] = useState<LoadNetworkViewModel>(new LoadNetworkViewModelImpl(loadNetworksUseCase, networkHolder));
+    const [loadNetworkViewModel, setLoadNetworkViewModel] = useState<LoadNetworkViewModel>();
 
     useEffect(() => {
-        loadNetworkViewModel.attachView(baseView);
-        loadNetworkViewModel.ListDefaultNetworks();
-    }, [])
+        const loadNetworksUseCase: LoadNetworksUseCase = new LoadNetworksUseCase(networkRepository, networkHolder);
+        const viewModel = new LoadNetworkViewModelImpl(loadNetworksUseCase, networkHolder);
+        setLoadNetworkViewModel(viewModel);
+    }, []);
+
+    useEffect(() => {
+        if (loadNetworkViewModel) {
+            loadNetworkViewModel.attachView(baseView);
+            loadNetworkViewModel.ListDefaultNetworks();
+
+            return () => {
+                loadNetworkViewModel.destroyListener();
+            }
+        }
+    }, [loadNetworkViewModel]);
 
     return (
         <LoadingContainer>
@@ -39,4 +49,4 @@ const LoadNetworkComponent: FC = () => {
     );
 }
 
-export default LoadNetworkComponent
+export default LoadNetworkComponent;

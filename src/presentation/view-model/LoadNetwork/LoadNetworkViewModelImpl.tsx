@@ -14,7 +14,7 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
     public nColFileType: string;
     isLoaded: boolean;
 
-    public baseView?: BaseView;
+    private baseView?: BaseView;
     private loadNetworksUseCase: LoadNetworksUseCase;
     private networkHolder: NetworkHolder;
 
@@ -36,6 +36,10 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
 
     public onBrowseFile = (extension: string): void => {
 
+    }
+
+    public destroyListener = (): void => {
+        this.networkHolder.removeNetworkListener(this);
     }
 
     public ListDefaultNetworks = async () => {

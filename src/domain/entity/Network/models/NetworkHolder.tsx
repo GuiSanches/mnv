@@ -39,6 +39,9 @@ export default class NetworkHolder {
     }
 
     private notifyListeners(): void {
-        this.networkListeners.forEach(listener => listener.onNetworkChanged());
+        this.networkListeners.forEach(listener => {
+            console.log('listener', listener);
+            listener.onNetworkChanged()}
+            );
     }
 }

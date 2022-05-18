@@ -1519,6 +1519,11 @@ natural-compare@^1.4.0:
   resolved "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
+netv@^1.1.10:
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/netv/-/netv-1.1.10.tgz#eec65bd6caa63fd16526c20ee6a7118998cea074"
+  integrity sha512-15/HaplD0VL61WiVyLqqxxtnwNUYUYEG3z/JE7DOVAuZU6l/z3VuQ34g+v255WeH9+0DtVlWbUaCn3baBYlmjQ==
+
 next@12.1.5:
   version "12.1.5"
   resolved "https://registry.npmjs.org/next/-/next-12.1.5.tgz"

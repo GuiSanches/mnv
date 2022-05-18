@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Navitem from "../../components/NavItem/NavItem";
 import { NetworkContext } from "../../presentation/util/NetworkCtx";
-import LoadNetworkComponent from "../../presentation/view/LoadNetwork/LoadNetworkComponent";
+import LoadNetworkComponent from "../../presentation/view/LoadNetwork";
 
 import { Container, Nav, NavbarNav } from './styles';
 
