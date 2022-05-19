@@ -18,13 +18,13 @@ const hex2rgba = (hex: string, alpha = 1.) => {
 const NetvCanvas: FC<Props> = ({ refs, network }) => {
   useEffect(() => {
     if (network.network) {
-      const NetV = require('netv/build/NetV.js').default;
-      initNetContainer(NetV);
+      initNetContainer();
     }
   })
 
-  const initNetContainer = (NetV: any) => {
+  const initNetContainer = async () => {
     if (refs.current) {
+      const NetV = (await import('netv')).default;
       const div = refs.current as HTMLElement
       const width: number = refs.current.clientWidth;
       const height: number = refs.current.clientHeight;
@@ -71,7 +71,7 @@ const NetvCanvas: FC<Props> = ({ refs, network }) => {
 
       networkUI.nodes().forEach((node: any) => {
         networkUI.on('pan', (EMPTY_CALLBACK));
-        networkUI.on('zoom');
+        networkUI.on('zoom', (EMPTY_CALLBACK));
 
         node.on('dragging', () => { });
       });

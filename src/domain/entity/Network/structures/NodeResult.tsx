@@ -4,7 +4,7 @@ export interface NodeResult {
     x: any;
     y: any;
     color: string;
-    id: BigInt;
+    id: string;
     weight: number;
     shape: string;
     type: BigInt;

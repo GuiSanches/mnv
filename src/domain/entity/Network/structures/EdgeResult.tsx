@@ -1,5 +1,5 @@
 export interface EdgeResult {
-    source: BigInt;
-    target: BigInt;
+    source: string;
+    target: string;
     size: BigInt;
 }
