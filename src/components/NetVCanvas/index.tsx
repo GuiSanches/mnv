@@ -27,6 +27,7 @@ const NetvCanvas: FC<Props> = ({ refs, network }) => {
       const NetV = require('netv/build/NetV.js').default; // Module must be import after did Mount, cause it uses Window var
       // (await import('netv')).default // Is broken but may show some documentation.
       const div = refs.current as HTMLElement
+      div.replaceChildren('')
       const width: number = refs.current.clientWidth;
       const height: number = refs.current.clientHeight;
 
