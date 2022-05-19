@@ -1,4 +1,5 @@
-import { FC, useContext, useEffect, useMemo, useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { FC, MutableRefObject, useContext, useEffect, useMemo, useRef, useState } from "react";
 import NetvCanvas from "../../../components/NetVCanvas";
 import { NetworkCtx } from "../../util/NetworkCtx";
 import ShowNetworkViewModel from "../../view-model/ShowNetwork/ShowNetworkViewModel";
@@ -11,7 +12,8 @@ const ShowNetworkComponent: FC = () => {
     const { networkHolder } = useContext(NetworkCtx);
     const [showNetworkViewModel, setShowNetworkViewModel] = useState<ShowNetworkViewModel>();
 
-    const CanvaRef = useRef(null);
+    const CanvaRef = useRef<HTMLDivElement>(null);
+
 
     const baseView: BaseView = useMemo(() => {
         const view = ({
@@ -44,13 +46,12 @@ const ShowNetworkComponent: FC = () => {
         }
     }, [showNetworkViewModel]);
 
+    const NetV = useMemo(() => <NetvCanvas refs={CanvaRef} network={networkHolder.getNetwork()} />, [update])
+
     return (
         <Container>
-            <Canva>
-                {update ? 'true' : 'false'}
-                {
-                    showNetworkViewModel && <NetvCanvas refs={CanvaRef} network={networkHolder.getNetwork()} />
-                }
+            <Canva ref={CanvaRef}>
+                {showNetworkViewModel && NetV}
             </Canva>
         </Container>
     )

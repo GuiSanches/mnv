@@ -1,6 +1,9 @@
 import { Position } from "./common";
 
 export interface NodeResult {
+    x: any;
+    y: any;
+    color: string;
     id: BigInt;
     weight: number;
     shape: string;

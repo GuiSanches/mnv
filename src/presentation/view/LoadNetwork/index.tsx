@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import LoadNetworksUseCase from "../../../domain/interactors/Network/LoadingNetwork/LoadNetworksUseCase";
 import { NetworkCtx } from "../../util/NetworkCtx";
