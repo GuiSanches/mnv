@@ -17,14 +17,15 @@ const hex2rgba = (hex: string, alpha = 1.) => {
 
 const NetvCanvas: FC<Props> = ({ refs, network }) => {
   useEffect(() => {
-    if (network.network) {
+    if (network.network) {      
       initNetContainer();
     }
   })
 
-  const initNetContainer = async () => {
+  const initNetContainer = () => {
     if (refs.current) {
-      const NetV = (await import('netv')).default;
+      const NetV = require('netv/build/NetV.js').default; // Module must be import after did Mount, cause it uses Window var
+      // (await import('netv')).default // Is broken but may show some documentation.
       const div = refs.current as HTMLElement
       const width: number = refs.current.clientWidth;
       const height: number = refs.current.clientHeight;
@@ -71,7 +72,7 @@ const NetvCanvas: FC<Props> = ({ refs, network }) => {
 
       networkUI.nodes().forEach((node: any) => {
         networkUI.on('pan', (EMPTY_CALLBACK));
-        networkUI.on('zoom', (EMPTY_CALLBACK));
+        networkUI.on('zoom');
 
         node.on('dragging', () => { });
       });
