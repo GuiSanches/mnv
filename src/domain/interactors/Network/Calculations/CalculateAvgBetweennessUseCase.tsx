@@ -18,8 +18,7 @@ export default class CalculateAvgBetweennessUseCase {
             ...this.networkHolder.getNetwork().Info,
             averageBetweenness
         }
-
-        console.log('caso de uso', networkInfo)
+        
         this.networkHolder.onNetworkInfoChanged(networkInfo);
     }
 }
