@@ -51,8 +51,8 @@ const NetvCanvas: FC<Props> = ({ refs, network }) => {
         nodes: network.network.nodes
           .map(n => ({
             id: n.id,
-            x: n.x,
-            y: n.y,
+            x: n.position.x,
+            y: n.position.y,
             style: {
               fill: hex2rgba(n.color, 0.8),
               strokeColor: hex2rgba('#ffffff', 1.0),
