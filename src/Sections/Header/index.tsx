@@ -1,6 +1,7 @@
 import { FC } from "react";
 import Navitem from "../../components/NavItem/NavItem";
 import { NetworkContext } from "../../presentation/util/NetworkCtx";
+import InfoNetworkComponent from "../../presentation/view/InfoNetwork";
 import LoadNetworkComponent from "../../presentation/view/LoadNetwork";
 
 import { Container, Nav, NavbarNav } from './styles';
@@ -15,8 +16,8 @@ const Header: FC = () => (
                         Component={LoadNetworkComponent} />
 
                     <Navitem
-                        title="Layout"
-                        Component={LoadNetworkComponent} />
+                        title="Information"
+                        Component={InfoNetworkComponent} />
                 </NavbarNav>
 
 

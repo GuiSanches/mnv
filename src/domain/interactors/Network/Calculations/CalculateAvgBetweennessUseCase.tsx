@@ -13,8 +13,13 @@ export default class CalculateAvgBetweennessUseCase {
     }
 
     public async calculateAvgBetweenness(networkContainerResult: NetworkContainerResult) {
-        const networkInfoResult : NetworkInfoResult = await this.networkRepository.calculateAvgBetweenness(networkContainerResult);
+        const averageBetweenness : number = await this.networkRepository.calculateAvgBetweenness(networkContainerResult);
+        const networkInfo : NetworkInfoResult = {
+            ...this.networkHolder.getNetwork().Info,
+            averageBetweenness
+        }
 
-        this.networkHolder.onNetworkInfoChanged(networkInfoResult);
+        console.log('caso de uso', networkInfo)
+        this.networkHolder.onNetworkInfoChanged(networkInfo);
     }
 }

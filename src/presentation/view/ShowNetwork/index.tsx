@@ -36,7 +36,6 @@ const ShowNetworkComponent: FC = () => {
     }, []);
 
     useEffect(() => {
-        console.log(showNetworkViewModel)
         if (showNetworkViewModel) {
             showNetworkViewModel.attachView(baseView);
 

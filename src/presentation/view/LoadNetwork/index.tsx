@@ -38,7 +38,6 @@ const LoadNetworkComponent: FC = () => {
     }, []);
 
     useEffect(() => {
-        console.log('teste', loadNetworkViewModel);
         if (loadNetworkViewModel) {
             loadNetworkViewModel.attachView(baseView);
             loadNetworkViewModel.ListDefaultNetworks();

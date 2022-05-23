@@ -13,8 +13,14 @@ export default class CalculateAvgDegreeUseCase {
     }
 
     public async calculateAvgDegree(networkContainerResult: NetworkContainerResult) {
-        const networkInfoResult : NetworkInfoResult = await this.networkRepository.calculateAvgDegree(networkContainerResult);
 
-        this.networkHolder.onNetworkInfoChanged(networkInfoResult);
+        const averageDegree : number = await this.networkRepository.calculateAvgDegree(networkContainerResult);
+
+        const networkInfo : NetworkInfoResult = {
+            ...this.networkHolder.getNetwork().Info,
+            averageDegree
+        };
+
+        this.networkHolder.onNetworkInfoChanged(networkInfo);
     }
 }

@@ -8,13 +8,13 @@ export default interface NetworkRepository {
       */
 
      calculateAvgDegree(networkResult: NetworkContainerResult):
-     Promise<NetworkInfoResult>;
+     Promise<number>;
 
      calculateAvgBetweenness(networkResult: NetworkContainerResult):
-     Promise<NetworkInfoResult>;
+     Promise<number>;
 
      calculateAvgCloseness(networkResult: NetworkContainerResult):
-     Promise<NetworkInfoResult>;
+     Promise<number>;
 
      listDefaultNetworks():
      Promise<string[]>;

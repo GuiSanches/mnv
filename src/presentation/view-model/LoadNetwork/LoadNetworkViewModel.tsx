@@ -1,7 +1,4 @@
-import NetworkContainerResult from "../../../domain/entity/Network/structures/NetworkContainerResult";
-import BaseView from "../../view/BaseView";
 import BaseModalModel from "../BaseModalModel";
-
 export default interface LoadNetworkViewModel extends BaseModalModel {
     isLoaded: boolean;
     JsonFile: string;

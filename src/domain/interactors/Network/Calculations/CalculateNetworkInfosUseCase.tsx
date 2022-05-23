@@ -4,7 +4,7 @@ import CalculateAvgBetweennessUseCase from "./CalculateAvgBetweennessUseCase";
 import CalculateAvgClosenessUseCase from "./CalculateAvgClosenessUseCase";
 import CalculateAvgDegreeUseCase from "./CalculateAvgDegreeUseCase";
 
-export default class LoadNetworksUseCase {
+export default class CalculateNetworkInfosUseCase {
     public calculateAvgBetweenness: CalculateAvgBetweennessUseCase;
     public calculateAvgCloseness: CalculateAvgClosenessUseCase;
     public calculateAvgDegree: CalculateAvgDegreeUseCase;

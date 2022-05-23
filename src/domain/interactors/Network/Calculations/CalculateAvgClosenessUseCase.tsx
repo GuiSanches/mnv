@@ -13,8 +13,13 @@ export default class CalculateAvgClosenessUseCase {
     }
 
     public async calculateAvgCloseness(networkContainerResult: NetworkContainerResult) {
-        const networkInfoResult : NetworkInfoResult = await this.networkRepository.calculateAvgCloseness(networkContainerResult);
+        const averageCloseness : number = await this.networkRepository.calculateAvgCloseness(networkContainerResult);
 
-        this.networkHolder.onNetworkInfoChanged(networkInfoResult);
+        const networkInfo : NetworkInfoResult = {
+            ...this.networkHolder.getNetwork().Info,
+            averageCloseness
+        };
+
+        this.networkHolder.onNetworkInfoChanged(networkInfo);
     }
 }
