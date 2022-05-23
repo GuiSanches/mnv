@@ -1,10 +1,10 @@
 import axios, { AxiosInstance } from 'axios'
-import InfoAdapter from '../../adapter/mnvAdapterInfo/mnvAPI_NetContainer';
+import InfoAdapter from '../../adapter/mnvAdapterInfo/mnvAPI_NetInfo';
 import { InfoResult } from '../../adapter/mnvAdapterInfo/types';
+import NetContainerAdapter from '../../adapter/mnvLoadNet/mnvAPI_NetContainer';
+import { NetworkContainer } from '../../adapter/mnvLoadNet/types';
 
 import NetworkContainerResult from "../../domain/entity/Network/structures/NetworkContainerResult";
-import NetworkInfoResult from "../../domain/entity/Network/structures/NetworkInfoResult";
-import NetworkResult from '../../domain/entity/Network/structures/NetworkResult';
 import NetworkRepository from "../../domain/repository/Network/NetworkRepository";
 
 interface NetworkInfoResultResponse {
@@ -18,7 +18,7 @@ interface ListNetworkResponse {
 }
 
 interface NetworkContainerResultResponse {
-    data: NetworkContainerResult
+    data: NetworkContainer
 }
 
 export default class NetworkApi implements NetworkRepository {
@@ -89,7 +89,7 @@ export default class NetworkApi implements NetworkRepository {
             }
         });
 
-        return data;
+        return NetContainerAdapter.mnvAPIToNetwork(data);
     }
 
     async uploadJsonNetwork(filename: string): Promise<NetworkContainerResult> {
@@ -99,7 +99,7 @@ export default class NetworkApi implements NetworkRepository {
             }
         });
 
-        return data;
+        return NetContainerAdapter.mnvAPIToNetwork(data);
     }
 
     async uploadNcolNetwork(filename: string): Promise<NetworkContainerResult> {
@@ -109,6 +109,6 @@ export default class NetworkApi implements NetworkRepository {
             }
         });
 
-        return data;
+        return NetContainerAdapter.mnvAPIToNetwork(data);
     }
 }

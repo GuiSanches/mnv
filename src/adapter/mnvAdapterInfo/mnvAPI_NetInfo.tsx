@@ -1,6 +1,5 @@
 import { EdgeResult } from "../../domain/entity/Network/structures/EdgeResult";
 import NetworkContainerResult from "../../domain/entity/Network/structures/NetworkContainerResult";
-import NetworkInfoResult from "../../domain/entity/Network/structures/NetworkInfoResult";
 import { NodeResult } from "../../domain/entity/Network/structures/NodeResult";
 import { Edge, Node, GraphAPI, InfoResult } from "./types";
 
@@ -13,8 +12,6 @@ export default abstract class InfoAdapter {
             label: '',
             id: node.id
         };
-
-        const a = [[1, 2], 5, [2, 7]]
 
         return nodeParsed;
     }

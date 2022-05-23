@@ -1,5 +1,5 @@
 export interface Node {
-  type: string;
+  type: number;
   layer: string;
   label: string;
   id: string;

@@ -5,7 +5,7 @@ export interface NodeResult {
     id: string;
     weight: number;
     shape: string;
-    type: string;
+    type: number;
     position: Position;
     size: number;
     membership?: number;
