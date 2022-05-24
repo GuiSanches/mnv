@@ -22,8 +22,8 @@ export default class InfoNetworkViewModelImpl implements InfoNetworkViewModel, N
         this.isKeep = false;
         this.infoNetworkUseCase = infoNetworkUseCase;
 
-        this.numberOfEdges = networkHolder.getNetwork().network.edges.length;
-        this.numberOfVertices = networkHolder.getNetwork().network.nodes.length;
+        this.numberOfEdges = networkHolder.getNetwork().network?.edges.length;
+        this.numberOfVertices = networkHolder.getNetwork().network?.nodes.length;
 
         this.networkHolder = networkHolder;
         this.networkHolder.addNetworkListener(this);
@@ -32,10 +32,12 @@ export default class InfoNetworkViewModelImpl implements InfoNetworkViewModel, N
     }
 
     private getCalCulations = () => {
-        const { averageBetweenness, averageCloseness, averageDegree } = this.networkHolder.getNetwork().Info;
-        this.averageBetweeness = averageBetweenness;
-        this.averageCloseness = averageCloseness;
-        this.averageDegree = averageDegree;
+        if (this.networkHolder.getNetwork().Info) {
+            const { averageBetweenness, averageCloseness, averageDegree } = this.networkHolder.getNetwork().Info;
+            this.averageBetweeness = averageBetweenness;
+            this.averageCloseness = averageCloseness;
+            this.averageDegree = averageDegree;
+        }
     }
 
     public onComputeAverageDegree = async () => {

@@ -10,10 +10,13 @@ interface Props {
 }
 
 const DefaultNetwork: FC<Props> = ({ onLoadNetwork, options, loaded }) => {
-  const [selectedValue, setSelectedValue] = useState('-1')
+  const title = `Default networks`;
+  const label = `Load a network:`;
+
+  const [selectedValue, setSelectedValue] = useState('-1');
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedValue(e.target.value)
+    setSelectedValue(e.target.value);
   }
 
   const handleSubmit = (e: MouseEvent<HTMLInputElement>) => {
@@ -23,10 +26,10 @@ const DefaultNetwork: FC<Props> = ({ onLoadNetwork, options, loaded }) => {
 
   return (
     <Container>
-      <Label>Default networks</Label>
+      <Label>{title}</Label>
       <Line />
       <InputGroupPrepend>
-        <InputGroupText className="span-125">Load a network:</InputGroupText>
+        <InputGroupText className="span-125">{label}</InputGroupText>
         <Select value={selectedValue} onChange={handleChange}>
           <option value="-1">Select</option>
           {options.map(option => <option value={option} key={option}>{option}</option>)}

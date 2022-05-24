@@ -1,6 +1,7 @@
 import NetworkRepository from "../../../repository/Network/NetworkRepository";
 import NetworkHolder from "../../../entity/Network/models/NetworkHolder";
-import NetworkContainerResult from "../../../entity/Network/structures/NetworkContainerResult";
+import { NetworkContainer } from "../../../../adapter/mnvLoadNet/types";
+import NetContainerAdapter from "../../../../adapter/mnvLoadNet/mnvAPI_NetContainer";
 
 export default class UploadJsonNetworkUseCase {
     private networkHolder: NetworkHolder;
@@ -11,9 +12,9 @@ export default class UploadJsonNetworkUseCase {
         this.networkRepository = networkRepository;
     }
 
-    public async uploadJsonNetwork(filename: string) {
-        const networkContainerResult : NetworkContainerResult = await this.networkRepository.uploadJsonNetwork(filename);
+    public async uploadJsonNetwork(network: NetworkContainer) {
+        const net = NetContainerAdapter.mnvAPIToNetwork(network);
 
-        this.networkHolder.onNetworkContainerChanged(networkContainerResult);
+        this.networkHolder.onNetworkContainerChanged(net);
     }
 }

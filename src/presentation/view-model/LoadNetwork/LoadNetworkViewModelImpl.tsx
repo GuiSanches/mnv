@@ -1,3 +1,4 @@
+import { NetworkContainer } from "../../../adapter/mnvLoadNet/types";
 import NetworkHolder from "../../../domain/entity/Network/models/NetworkHolder";
 import NetworkListener from "../../../domain/entity/Network/models/NetworkListener";
 import LoadNetworksUseCase from "../../../domain/interactors/Network/LoadingNetwork/LoadNetworksUseCase";
@@ -69,8 +70,8 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
         // console.log(this.networkHolder.getNetwork());
     }
 
-    public onUploadJsonFile = (): void => {
-
+    public onUploadJsonFile = (network: NetworkContainer): void => {
+        this.loadNetworksUseCase.uploadJsonNetwork.uploadJsonNetwork(network);
     }
 
     public attachView = (baseView: BaseView): void => {

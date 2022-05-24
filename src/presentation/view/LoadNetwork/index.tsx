@@ -7,6 +7,7 @@ import LoadNetworkViewModelImpl from "../../view-model/LoadNetwork/LoadNetworkVi
 import BaseView from "../BaseView";
 import DefaultNetwork from "./DefaultNetwork";
 import { LoadingContainer } from "./styles";
+import UploadJsonNetwork from "./UploadNetwork";
 
 const LoadNetworkComponent: FC = () => {
     const [update, setUpdate] = useState<boolean>(false);
@@ -29,7 +30,7 @@ const LoadNetworkComponent: FC = () => {
         return view
     }, [update])
 
-   
+
 
     useEffect(() => {
         const loadNetworksUseCase: LoadNetworksUseCase = new LoadNetworksUseCase(networkRepository, networkHolder);
@@ -50,11 +51,15 @@ const LoadNetworkComponent: FC = () => {
 
     return (
         <LoadingContainer>
-            {loadNetworkViewModel ? 
-                <DefaultNetwork
-                    options={loadNetworkViewModel.defaultNetworkOptions}
-                    onLoadNetwork={loadNetworkViewModel.onLoadDefaultNetwork} loaded={loadNetworkViewModel.isLoaded} /> :
-                    <span>Carregando</span>
+            {loadNetworkViewModel ?
+                <>
+                    <UploadJsonNetwork onUploadJsonFile={loadNetworkViewModel.onUploadJsonFile} />
+                    <DefaultNetwork
+                        options={loadNetworkViewModel.defaultNetworkOptions}
+                        onLoadNetwork={loadNetworkViewModel.onLoadDefaultNetwork} loaded={loadNetworkViewModel.isLoaded} />
+                </>
+                :
+                <span>Carregando</span>
             }
 
         </LoadingContainer>

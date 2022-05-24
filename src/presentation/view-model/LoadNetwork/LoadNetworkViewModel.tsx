@@ -1,8 +1,9 @@
+import { NetworkContainer } from "../../../adapter/mnvLoadNet/types";
 import BaseModalModel from "../BaseModalModel";
 export default interface LoadNetworkViewModel extends BaseModalModel {
     isLoaded: boolean;
     JsonFile: string;
-    onUploadJsonFile() : void;
+    onUploadJsonFile(network: NetworkContainer) : void;
 
     nColFile: string;
     nColFileType: string;
