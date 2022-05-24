@@ -34,3 +34,11 @@ span.span-125 {
   text-align: right;
   white-space: nowrap;
 }
+
+span.span-175 {
+  display: inline-block !important;
+  min-width: 175px !important;
+  float: right;
+  text-align: right;
+  white-space: nowrap;
+}

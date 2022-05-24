@@ -16,8 +16,9 @@ export default class NetworkHolder {
         this.notifyListeners();
     }
 
-    public onNetworkContainerChanged(network: NetworkContainerResult) : void {
+    public onNetworkContainerChanged(network: NetworkContainerResult): void {
         this.network.network = network;
+        this.notifyContainerListeners();
         this.onNetworkInfoChanged({});
     }
 
@@ -25,9 +26,9 @@ export default class NetworkHolder {
         return this.network;
     }
 
-    public onNetworkInfoChanged(networkInfoResult: NetworkInfoResult) : void {
+    public onNetworkInfoChanged(networkInfoResult: NetworkInfoResult): void {
         this.network.Info = networkInfoResult;
-        this.notifyListeners();
+        this.notifyInfoListeners();
     }
 
     public addNetworkListener(networkListener: NetworkListener): void {
@@ -38,9 +39,26 @@ export default class NetworkHolder {
         this.networkListeners.splice(this.networkListeners.indexOf(networkListener));
     }
 
+    private notifyInfoListeners(): void {
+        this.networkListeners.forEach(listener => {
+            if (listener.type === 'info')
+                listener.onNetworkChanged()
+        }
+        );
+    }
+
+    private notifyContainerListeners(): void {
+        this.networkListeners.forEach(listener => {
+            if (listener.type === 'network')
+                listener.onNetworkChanged()
+        }
+        );
+    }
+
     private notifyListeners(): void {
         this.networkListeners.forEach(listener => {
-            listener.onNetworkChanged()}
-            );
+            listener.onNetworkChanged()
+        }
+        );
     }
 }

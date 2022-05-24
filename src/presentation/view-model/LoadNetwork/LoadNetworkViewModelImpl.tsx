@@ -12,6 +12,7 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
     public isKeep: boolean;
     public nColFile: string;
     public nColFileType: string;
+    public type: "network" | "info";
     isLoaded: boolean;
 
     private baseView?: BaseView;
@@ -19,6 +20,7 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
     private networkHolder: NetworkHolder;
 
     public constructor(loadNetworksUseCase: LoadNetworksUseCase, networkHolder: NetworkHolder) {
+        this.type = 'network';
         this.isLoaded = false;
         this.JsonFile = '';
         this.defaultNetwork = '';

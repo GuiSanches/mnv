@@ -11,12 +11,14 @@ export default class InfoNetworkViewModelImpl implements InfoNetworkViewModel, N
     public averageBetweeness?: number;
     public averageCloseness?: number;
     public isKeep: boolean;
+    public type: "network" | "info";
 
     private baseView?: BaseView;
     private infoNetworkUseCase: CalculateNetworkInfosUseCase;
     private networkHolder: NetworkHolder;
 
     public constructor(infoNetworkUseCase: CalculateNetworkInfosUseCase, networkHolder: NetworkHolder) {
+        this.type = 'info'
         this.isKeep = false;
         this.infoNetworkUseCase = infoNetworkUseCase;
 

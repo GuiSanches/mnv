@@ -48,7 +48,7 @@ export default class NetworkApi implements NetworkRepository {
 
     async calculateAvgDegree(networkResult: NetworkContainerResult): Promise<number> {
         const { data }: NetworkInfoResultResponse = await this.client.post('/compute_network_information', {
-            method: 'averageCloseness',
+            method: 'averageDegree',
             graph: InfoAdapter.NetworkToMnvAPI(networkResult)
         },
             {
@@ -63,7 +63,7 @@ export default class NetworkApi implements NetworkRepository {
 
     async calculateAvgCloseness(networkResult: NetworkContainerResult): Promise<number> {
         const { data }: NetworkInfoResultResponse = await this.client.post('/compute_network_information', {
-            method: 'averageDegree',
+            method: 'averageCloseness',
             graph: InfoAdapter.NetworkToMnvAPI(networkResult)
         },
             {

@@ -1,12 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { FC, useContext, useEffect, useMemo, useState } from "react";
+import { FormControl, InputGroup, InputGroupPrepend, InputGroupText, Line } from "../../../../styles/global";
 import CalculateNetworkInfosUseCase from "../../../domain/interactors/Network/Calculations/CalculateNetworkInfosUseCase";
 import { NetworkCtx } from "../../util/NetworkCtx";
 import InfoNetworkViewModel from "../../view-model/InfoNetwork/InfoNetworkViewModel";
 import InfoNetworkViewModelImpl from "../../view-model/InfoNetwork/InfoNetworkViewModelImpl";
 import BaseView from "../BaseView";
+import ComputedElement from "./ComputedElement";
+import ComputeElement from "./ComputeElement";
+import { Header, InfoContainer, Title } from "./styles";
 
 const InfoNetworkComponent: FC = () => {
+    const title = `Network information`;
     const [update, setUpdate] = useState<boolean>(false);
     const { networkHolder, networkRepository } = useContext(NetworkCtx);
 
@@ -27,14 +32,6 @@ const InfoNetworkComponent: FC = () => {
         return view;
     }, [update]);
 
-    const handleClick = () => {
-        if (infoNetworkViewModel) {
-            infoNetworkViewModel.onComputeAverageBetweenness();
-            infoNetworkViewModel.onComputeAverageCloseness();
-            infoNetworkViewModel.onComputeAverageDegree();
-        }
-    }
-
     useEffect(() => {
         const calculateNetworkInfosUseCase: CalculateNetworkInfosUseCase = new CalculateNetworkInfosUseCase(networkRepository, networkHolder);
         const viewModel = new InfoNetworkViewModelImpl(calculateNetworkInfosUseCase, networkHolder);
@@ -53,10 +50,34 @@ const InfoNetworkComponent: FC = () => {
     }, [infoNetworkViewModel])
 
     return (
-        <div>
-            <button onClick={() => handleClick()}>Click me</button>
-            Olá {`degree ${infoNetworkViewModel?.averageDegree} | betweeness ${infoNetworkViewModel?.averageBetweeness} | closeness ${infoNetworkViewModel?.averageCloseness}`}
-        </div>
+        <InfoContainer>
+            {infoNetworkViewModel ?
+                <>
+                    <Header>
+                        <Title>{title}</Title>
+                        <Line />
+
+                        <ComputedElement
+                            title="Number of vertices:" total={infoNetworkViewModel.numberOfVertices} />
+                        <ComputedElement
+                            title="Number of edges:" total={infoNetworkViewModel.numberOfEdges} />
+                        <ComputeElement
+                            title="Average degree:"
+                            onCompute={infoNetworkViewModel.onComputeAverageDegree}
+                            total={infoNetworkViewModel.averageDegree} />
+                        <ComputeElement
+                            title="Average betweenness:"
+                            onCompute={infoNetworkViewModel.onComputeAverageBetweenness}
+                            total={infoNetworkViewModel.averageBetweeness} />
+                        <ComputeElement
+                            title="Average closeness:"
+                            onCompute={infoNetworkViewModel.onComputeAverageCloseness}
+                            total={infoNetworkViewModel.averageCloseness} />
+                    </Header>
+                </> :
+                <p>Carregando...</p>
+            }
+        </InfoContainer>
     )
 }
 
