@@ -43,6 +43,13 @@ export const Select = styled.select`
 export const Submit = styled.div`
   margin-left: -1px;
   display: flex;
+  align-items: center;
+  min-width: 100px;
+  justify-content: center;
+
+  & > span {
+    margin-right: 0.5rem;
+  }
 `;
 
 export const Input = styled(InputGroupText)`
@@ -51,7 +58,6 @@ export const Input = styled(InputGroupText)`
     border-top-left-radius: 0;
     border-bottom-left-radius;
     cursor: pointer;
-    min-width: 100px;
     padding-left: 0;
     padding-right: 0;
     display: table-cell;

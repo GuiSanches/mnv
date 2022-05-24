@@ -1,17 +1,16 @@
 import { ChangeEvent, FC, MouseEvent, useEffect, useState } from "react";
 import { Container, Input, Select, Submit } from "./styles";
 import { Line, Label, InputGroup, InputGroupPrepend, InputGroupText } from "../../../../../styles/global";
+import { ClipLoader } from "react-spinners";
 
 interface Props {
   onLoadNetwork: (filename: string) => void;
   options: string[];
+  loaded: boolean;
 }
 
-const DefaultNetwork: FC<Props> = ({ onLoadNetwork, options }) => {
+const DefaultNetwork: FC<Props> = ({ onLoadNetwork, options, loaded }) => {
   const [selectedValue, setSelectedValue] = useState('-1')
-  useEffect(() => {
-
-  })
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedValue(e.target.value)
@@ -33,7 +32,10 @@ const DefaultNetwork: FC<Props> = ({ onLoadNetwork, options }) => {
           {options.map(option => <option value={option} key={option}>{option}</option>)}
         </Select>
         <Submit>
-          <Input as="input" type="submit" value="Load" onClick={handleSubmit}/>
+          <ClipLoader color={'#ffffff'} loading={loaded}
+            css={'border: red'}
+            size={15} />
+          <Input as="input" type="submit" value="Load" onClick={handleSubmit} />
         </Submit>
       </InputGroupPrepend>
     </Container>

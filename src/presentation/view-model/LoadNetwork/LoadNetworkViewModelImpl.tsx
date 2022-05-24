@@ -50,7 +50,11 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
     }
 
     public onLoadDefaultNetwork = async (filename: string) => {
+        this.isLoaded = true;
+        this.notifyViewAboutChanges();
         await this.loadNetworksUseCase.loadDefaultNetwork.loadDefaultNetwork(filename);
+        this.isLoaded = false;
+        this.notifyViewAboutChanges();
     }
 
     public onLoadnColFile = (): void => {

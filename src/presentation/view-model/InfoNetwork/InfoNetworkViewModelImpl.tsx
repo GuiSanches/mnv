@@ -27,6 +27,15 @@ export default class InfoNetworkViewModelImpl implements InfoNetworkViewModel, N
 
         this.networkHolder = networkHolder;
         this.networkHolder.addNetworkListener(this);
+
+        this.getCalCulations();
+    }
+
+    private getCalCulations = () => {
+        const { averageBetweenness, averageCloseness, averageDegree } = this.networkHolder.getNetwork().Info;
+        this.averageBetweeness = averageBetweenness;
+        this.averageCloseness = averageCloseness;
+        this.averageDegree = averageDegree;
     }
 
     public onComputeAverageDegree = async () => {

@@ -53,7 +53,7 @@ const LoadNetworkComponent: FC = () => {
             {loadNetworkViewModel ? 
                 <DefaultNetwork
                     options={loadNetworkViewModel.defaultNetworkOptions}
-                    onLoadNetwork={loadNetworkViewModel.onLoadDefaultNetwork} /> :
+                    onLoadNetwork={loadNetworkViewModel.onLoadDefaultNetwork} loaded={loadNetworkViewModel.isLoaded} /> :
                     <span>Carregando</span>
             }
 
