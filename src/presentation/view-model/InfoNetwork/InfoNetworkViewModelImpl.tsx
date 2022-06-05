@@ -31,15 +31,6 @@ export default class InfoNetworkViewModelImpl implements InfoNetworkViewModel, N
         this.getCalCulations();
     }
 
-    private getCalCulations = () => {
-        if (this.networkHolder.getNetwork().Info) {
-            const { averageBetweenness, averageCloseness, averageDegree } = this.networkHolder.getNetwork().Info;
-            this.averageBetweeness = averageBetweenness;
-            this.averageCloseness = averageCloseness;
-            this.averageDegree = averageDegree;
-        }
-    }
-
     public onComputeAverageDegree = async () => {
         await this.infoNetworkUseCase.calculateAvgDegree.calculateAvgDegree(this.networkHolder.getNetwork().network);
         this.averageDegree = this.networkHolder.getNetwork().Info.averageDegree;
@@ -78,5 +69,14 @@ export default class InfoNetworkViewModelImpl implements InfoNetworkViewModel, N
             this.baseView.onViewModelChanged();
         }
     };
+
+    private getCalCulations = () => {
+        if (this.networkHolder.getNetwork().Info) {
+            const { averageBetweenness, averageCloseness, averageDegree } = this.networkHolder.getNetwork().Info;
+            this.averageBetweeness = averageBetweenness;
+            this.averageCloseness = averageCloseness;
+            this.averageDegree = averageDegree;
+        }
+    }
 
 }

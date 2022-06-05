@@ -36,11 +36,6 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel, N
         this.networkHolder.addNetworkListener(this);
     }
 
-
-    public onBrowseFile = (extension: string): void => {
-
-    }
-
     public destroyListener = (): void => {
         this.networkHolder.removeNetworkListener(this);
     }
