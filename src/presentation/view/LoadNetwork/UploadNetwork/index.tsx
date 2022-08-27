@@ -16,8 +16,6 @@ const UploadJsonNetwork: FC<Props> = ({ onUploadJsonFile }) => {
         if (fileSelected) {
             const formData = new FormData();
             formData.append('network', fileSelected, fileSelected.name);
-            console.log(formData.getAll('network')[0]);
-            console.log(fileSelected.name)
 
             const fileReader = new FileReader();
             fileReader.readAsText(fileSelected, "UTF-8");

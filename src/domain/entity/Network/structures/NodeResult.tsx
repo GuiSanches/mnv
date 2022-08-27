@@ -1,6 +1,7 @@
 import { Position } from "./common";
+import { Conector } from "./ConectorResult";
 
-export interface NodeResult {
+export interface NodeResult extends Conector<NodeResult> {
     color: string;
     id: string;
     weight: number;

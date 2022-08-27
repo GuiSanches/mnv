@@ -22,7 +22,7 @@ interface NetworkContainerResultResponse {
 }
 
 export default class NetworkApi implements NetworkRepository {
-    private API_URL = 'https://mnv-backend.herokuapp.com';
+    private API_URL = 'http://localhost:5000';
     private client: AxiosInstance;
 
     public constructor() {

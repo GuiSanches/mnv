@@ -8,62 +8,73 @@ import BaseView from "../BaseView";
 import DefaultNetwork from "./DefaultNetwork";
 import { LoadingContainer } from "./styles";
 import UploadJsonNetwork from "./UploadNetwork";
+import useGetNetworkFromQuery from "../../util/getNetworkFromQuery";
 
 const LoadNetworkComponent: FC = () => {
-    const [update, setUpdate] = useState<boolean>(false);
-    const { networkHolder, networkRepository } = useContext(NetworkCtx);
+  const [update, setUpdate] = useState<boolean>(false);
+  const { networkHolders, networkRepository } = useContext(NetworkCtx);
 
-    const [loadNetworkViewModel, setLoadNetworkViewModel] = useState<LoadNetworkViewModel>();
+  const networkHolder = useGetNetworkFromQuery(networkHolders);
 
-    const baseView: BaseView = useMemo(() => {
-        const view = ({
-            onViewModelChanged: () => {
-                setUpdate(!update);
-            }
-        })
+  const [loadNetworkViewModel, setLoadNetworkViewModel] =
+    useState<LoadNetworkViewModel>();
 
-        if (loadNetworkViewModel) {
-            loadNetworkViewModel.detachView();
-            loadNetworkViewModel.attachView(view);
-        }
+  const baseView: BaseView = useMemo(() => {
+    const view = {
+      onViewModelChanged: () => {
+        setUpdate(!update);
+      },
+    };
 
-        return view
-    }, [update])
+    if (loadNetworkViewModel) {
+      loadNetworkViewModel.detachView();
+      loadNetworkViewModel.attachView(view);
+    }
 
+    return view;
+  }, [update, networkHolder]);
 
-
-    useEffect(() => {
-        const loadNetworksUseCase: LoadNetworksUseCase = new LoadNetworksUseCase(networkRepository, networkHolder);
-        const viewModel = new LoadNetworkViewModelImpl(loadNetworksUseCase, networkHolder);
-        setLoadNetworkViewModel(viewModel);
-    }, []);
-
-    useEffect(() => {
-        if (loadNetworkViewModel) {
-            loadNetworkViewModel.attachView(baseView);
-            loadNetworkViewModel.ListDefaultNetworks();
-
-            return () => {
-                loadNetworkViewModel.destroyListener();
-            }
-        }
-    }, [loadNetworkViewModel]);
-
-    return (
-        <LoadingContainer>
-            {loadNetworkViewModel ?
-                <>
-                    <UploadJsonNetwork onUploadJsonFile={loadNetworkViewModel.onUploadJsonFile} />
-                    <DefaultNetwork
-                        options={loadNetworkViewModel.defaultNetworkOptions}
-                        onLoadNetwork={loadNetworkViewModel.onLoadDefaultNetwork} loaded={loadNetworkViewModel.isLoaded} />
-                </>
-                :
-                <span>Carregando</span>
-            }
-
-        </LoadingContainer>
+  useEffect(() => {
+    const loadNetworksUseCase: LoadNetworksUseCase = new LoadNetworksUseCase(
+      networkRepository,
+      networkHolder
     );
-}
+    const viewModel = new LoadNetworkViewModelImpl(
+      loadNetworksUseCase,
+      networkHolder
+    );
+    setLoadNetworkViewModel(viewModel);
+  }, [networkHolder]);
+
+  useEffect(() => {
+    if (loadNetworkViewModel) {
+      loadNetworkViewModel.attachView(baseView);
+      loadNetworkViewModel.ListDefaultNetworks();
+
+      return () => {
+        loadNetworkViewModel.destroyListener();
+      };
+    }
+  }, [loadNetworkViewModel]);
+
+  return (
+    <LoadingContainer>
+      {loadNetworkViewModel ? (
+        <>
+          <UploadJsonNetwork
+            onUploadJsonFile={loadNetworkViewModel.onUploadJsonFile}
+          />
+          <DefaultNetwork
+            options={loadNetworkViewModel.defaultNetworkOptions}
+            onLoadNetwork={loadNetworkViewModel.onLoadDefaultNetwork}
+            loaded={loadNetworkViewModel.isLoaded}
+          />
+        </>
+      ) : (
+        <span>Carregando</span>
+      )}
+    </LoadingContainer>
+  );
+};
 
 export default LoadNetworkComponent;
