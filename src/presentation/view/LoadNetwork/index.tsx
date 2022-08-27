@@ -8,31 +8,20 @@ import BaseView from "../BaseView";
 import DefaultNetwork from "./DefaultNetwork";
 import { LoadingContainer } from "./styles";
 import UploadJsonNetwork from "./UploadNetwork";
-import useGetNetworkFromQuery from "../../util/getNetworkFromQuery";
+import useGetNetworkFromQuery from "../../util/useGetNetworkFromQuery";
+import useBaseView from "../../util/useGetBaseView";
 
 const LoadNetworkComponent: FC = () => {
-  const [update, setUpdate] = useState<boolean>(false);
   const { networkHolders, networkRepository } = useContext(NetworkCtx);
 
   const networkHolder = useGetNetworkFromQuery(networkHolders);
 
   const [loadNetworkViewModel, setLoadNetworkViewModel] =
     useState<LoadNetworkViewModel>();
-
-  const baseView: BaseView = useMemo(() => {
-    const view = {
-      onViewModelChanged: () => {
-        setUpdate(!update);
-      },
-    };
-
-    if (loadNetworkViewModel) {
-      loadNetworkViewModel.detachView();
-      loadNetworkViewModel.attachView(view);
-    }
-
-    return view;
-  }, [update, networkHolder]);
+  const [, baseView] = useBaseView<LoadNetworkViewModel>(
+    networkHolder,
+    loadNetworkViewModel
+  );
 
   useEffect(() => {
     const loadNetworksUseCase: LoadNetworksUseCase = new LoadNetworksUseCase(

@@ -1,36 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { FC, useContext, useEffect, useMemo, useRef, useState } from "react";
 import NetvCanvas from "../../../components/NetVCanvas";
-import useGetNetworkFromQuery from "../../util/getNetworkFromQuery";
+import useGetNetworkFromQuery from "../../util/useGetNetworkFromQuery";
 import { NetworkCtx } from "../../util/NetworkCtx";
 import ShowNetworkViewModel from "../../view-model/ShowNetwork/ShowNetworkViewModel";
 import ShowNetworkViewModelImpl from "../../view-model/ShowNetwork/ShowNetworkViewModelImpl";
 import BaseView from "../BaseView";
 import { Container, Canva } from "./styles";
+import useBaseView from "../../util/useGetBaseView";
 
 const ShowNetworkComponent: FC = () => {
-  const [update, setUpdate] = useState<boolean>(false);
-  const { networkHolders } = useContext(NetworkCtx);
   const [showNetworkViewModel, setShowNetworkViewModel] =
     useState<ShowNetworkViewModel>();
+
+  const { networkHolders } = useContext(NetworkCtx);
   const networkHolder = useGetNetworkFromQuery(networkHolders);
 
+  const [update, baseView] = useBaseView<ShowNetworkViewModel>(
+    networkHolder,
+    showNetworkViewModel
+  );
   const CanvaRef = useRef<HTMLDivElement>(null);
-
-  const baseView: BaseView = useMemo(() => {
-    const view = {
-      onViewModelChanged: () => {
-        setUpdate(!update);
-      },
-    };
-
-    if (showNetworkViewModel) {
-      showNetworkViewModel.detachView();
-      showNetworkViewModel.attachView(view);
-    }
-
-    return view;
-  }, [update, networkHolder]);
 
   useEffect(() => {
     const viewModel = new ShowNetworkViewModelImpl(networkHolder);

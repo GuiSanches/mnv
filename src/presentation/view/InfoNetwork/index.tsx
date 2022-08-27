@@ -2,7 +2,7 @@
 import { FC, useContext, useEffect, useMemo, useState } from "react";
 import { Line } from "../../../../styles/global";
 import CalculateNetworkInfosUseCase from "../../../domain/interactors/Network/Calculations/CalculateNetworkInfosUseCase";
-import useGetNetworkFromQuery from "../../util/getNetworkFromQuery";
+import useGetNetworkFromQuery from "../../util/useGetNetworkFromQuery";
 import { NetworkCtx } from "../../util/NetworkCtx";
 import InfoNetworkViewModel from "../../view-model/InfoNetwork/InfoNetworkViewModel";
 import InfoNetworkViewModelImpl from "../../view-model/InfoNetwork/InfoNetworkViewModelImpl";
@@ -10,31 +10,21 @@ import BaseView from "../BaseView";
 import ComputedElement from "./ComputedElement";
 import ComputeElement from "./ComputeElement";
 import { Header, InfoContainer, Title } from "./styles";
+import useBaseView from "../../util/useGetBaseView";
 
 const InfoNetworkComponent: FC = () => {
   const title = `Network information`;
-  const [update, setUpdate] = useState<boolean>(false);
-  const { networkHolders, networkRepository } = useContext(NetworkCtx);
 
+  const { networkHolders, networkRepository } = useContext(NetworkCtx);
   const networkHolder = useGetNetworkFromQuery(networkHolders);
 
   const [infoNetworkViewModel, setInfoNetworkViewModel] =
     useState<InfoNetworkViewModel>();
 
-  const baseView: BaseView = useMemo(() => {
-    const view: BaseView = {
-      onViewModelChanged: () => {
-        setUpdate(!update);
-      },
-    };
-
-    if (infoNetworkViewModel) {
-      infoNetworkViewModel.detachView();
-      infoNetworkViewModel.attachView(view);
-    }
-
-    return view;
-  }, [update, networkHolder]);
+  const [, baseView] = useBaseView<InfoNetworkViewModel>(
+    networkHolder,
+    infoNetworkViewModel
+  );
 
   useEffect(() => {
     const calculateNetworkInfosUseCase: CalculateNetworkInfosUseCase =
