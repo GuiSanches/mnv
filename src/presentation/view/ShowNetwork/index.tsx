@@ -46,21 +46,19 @@ const ShowNetworkComponent: FC = () => {
     Initiate netCanvas after net changes
   */
   useEffect(() => {
-    const netUI = initNetContainer();
-    setNetUI(netUI);
-  }, [update, networkHolder]);
+    const UI = initNetContainer();
+    setNetUI(UI);
 
-  /* 
+    /* 
     Updates NetworkHolder nodes position
     After component's ummount 
    */
-  useEffect(() => {
     return () => {
       if (netUI && networkHolder !== prevNetworkHolder) {
         updateNet(netUI, prevNetworkHolder);
       }
     };
-  }, [networkHolder, netUI]);
+  }, [update, networkHolder]);
 
   return (
     <Container>
