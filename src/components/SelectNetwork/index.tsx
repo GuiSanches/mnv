@@ -35,7 +35,7 @@ const SelectNetwork: FC<Props> = () => {
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const id = parseInt(e.target.value);
     if (!networkHolders[id]) {
-      networkHolders[id] = new NetworkHolder();
+      networkHolders[id] = new NetworkHolder("default");
       setNetworkHolders!(networkHolders);
     }
     setUpdated(!updated);

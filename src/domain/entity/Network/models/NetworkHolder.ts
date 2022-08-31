@@ -6,10 +6,12 @@ import NetworkListener from "./NetworkListener";
 export default class NetworkHolder {
   private networkListeners: NetworkListener[];
   private network: NetworkResult;
+  public name: string;
 
-  public constructor() {
+  public constructor(name: string) {
     this.networkListeners = [];
     this.network = {} as NetworkResult;
+    this.name = name;
   }
 
   public onNetworkChanged(): void {

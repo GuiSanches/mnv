@@ -4,7 +4,7 @@ import NetworkApi from "../../data/Network/NetworkApi";
 import NetworkHolder from "../../domain/entity/Network/models/NetworkHolder";
 import NetworkRepository from "../../domain/repository/Network/NetworkRepository";
 
-const networkHolder: NetworkHolder[] = [new NetworkHolder()];
+const networkHolder: NetworkHolder[] = [new NetworkHolder("default")];
 const networkRepository: NetworkRepository = new NetworkApi();
 
 interface CtxType {
