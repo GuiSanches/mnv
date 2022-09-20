@@ -1,5 +1,12 @@
 import { useRouter } from "next/router";
-import { ChangeEvent, FC, useContext, useMemo, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import NetworkHolder from "../../domain/entity/Network/models/NetworkHolder";
 import { NetworkCtx } from "../../presentation/util/NetworkCtx";
 
@@ -35,7 +42,7 @@ const SelectNetwork: FC<Props> = () => {
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const id = parseInt(e.target.value);
     if (!networkHolders[id]) {
-      networkHolders[id] = new NetworkHolder("default");
+      networkHolders[id] = new NetworkHolder();
       setNetworkHolders!(networkHolders);
     }
     setUpdated(!updated);
@@ -46,7 +53,7 @@ const SelectNetwork: FC<Props> = () => {
       },
     });
   };
-
+  
   return (
     <select value={value} onChange={handleChange}>
       {options}

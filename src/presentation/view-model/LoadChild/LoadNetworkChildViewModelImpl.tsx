@@ -1,39 +1,33 @@
 import { NetworkContainer } from "../../../adapter/mnvLoadNet/types";
 import NetworkHolder from "../../../domain/entity/Network/models/NetworkHolder";
 import NetworkListener from "../../../domain/entity/Network/models/NetworkListener";
-import LoadNetworksUseCase from "../../../domain/interactors/Network/LoadingNetwork/LoadNetworksUseCase";
+import LoadDefaultNetworkChildUseCase from "../../../domain/interactors/Network/LoadingNetwork/LoadDefaultNetworkChildUseCase";
 import BaseView from "../../view/BaseView";
-import LoadNetworkViewModel from "./LoadNetworkViewModel";
+import LoadNetworkChildViewModel from "./LoadNetworkChildViewModel";
 
-export default class LoadNetworkViewModelImpl
-  implements LoadNetworkViewModel, NetworkListener
+export default class LoadNetworkChildViewModelImpl
+  implements LoadNetworkChildViewModel, NetworkListener
 {
-  public JsonFile: string;
   public defaultNetwork: string;
   public defaultNetworkOptions: string[];
   public isKeep: boolean;
-  public nColFile: string;
-  public nColFileType: string;
   public type: "network" | "info";
   isLoaded: boolean;
 
   private baseView?: BaseView;
-  private loadNetworksUseCase: LoadNetworksUseCase;
+  private loadNetworksChildUseCase: LoadDefaultNetworkChildUseCase;
   private networkHolder: NetworkHolder;
 
   public constructor(
-    loadNetworksUseCase: LoadNetworksUseCase,
+    loadNetworksUseCase: LoadDefaultNetworkChildUseCase,
     networkHolder: NetworkHolder
   ) {
     this.type = "network";
     this.isLoaded = false;
-    this.JsonFile = "";
     this.defaultNetwork = "";
     this.isKeep = false;
-    this.nColFile = "";
-    this.nColFileType = "";
 
-    this.loadNetworksUseCase = loadNetworksUseCase;
+    this.loadNetworksChildUseCase = loadNetworksUseCase;
     this.networkHolder = networkHolder;
     this.defaultNetworkOptions = [""];
 
@@ -46,30 +40,23 @@ export default class LoadNetworkViewModelImpl
 
   public ListDefaultNetworks = async () => {
     this.defaultNetworkOptions =
-      await this.loadNetworksUseCase.loadDefaultNetwork.getDefaultNetworkList();
+      await this.loadNetworksChildUseCase.getDefaultNetworkList();
     this.notifyViewAboutChanges();
   };
 
-  public onLoadDefaultNetwork = async (filename: string) => {
+  public onLoadDefaultNetwork = async (filename: string) : Promise<NetworkHolder | null> => {
     this.isLoaded = true;
     this.notifyViewAboutChanges();
-    await this.loadNetworksUseCase.loadDefaultNetwork.loadDefaultNetwork(
-      filename
-    );
+    const networkHolder = await this.loadNetworksChildUseCase.loadDefaultNetworkChild(filename);
     this.isLoaded = false;
     this.notifyViewAboutChanges();
+    return networkHolder;
   };
-
-  public onLoadnColFile = (): void => {};
 
   public onModalClick = (): void => {};
 
   public onNetworkChanged = (): void => {
     // console.log(this.networkHolder.getNetwork());
-  };
-
-  public onUploadJsonFile = (network: NetworkContainer): void => {
-    this.loadNetworksUseCase.uploadJsonNetwork.uploadJsonNetwork(network);
   };
 
   public attachView = (baseView: BaseView): void => {

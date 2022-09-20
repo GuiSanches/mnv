@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FC, useContext, useEffect, useMemo, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { Line } from "../../../../styles/global";
 import CalculateNetworkInfosUseCase from "../../../domain/interactors/Network/Calculations/CalculateNetworkInfosUseCase";
 import useGetNetworkFromQuery from "../../util/useGetNetworkFromQuery";
 import { NetworkCtx } from "../../util/NetworkCtx";
 import InfoNetworkViewModel from "../../view-model/InfoNetwork/InfoNetworkViewModel";
 import InfoNetworkViewModelImpl from "../../view-model/InfoNetwork/InfoNetworkViewModelImpl";
-import BaseView from "../BaseView";
 import ComputedElement from "./ComputedElement";
 import ComputeElement from "./ComputeElement";
 import { Header, InfoContainer, Title } from "./styles";
@@ -34,15 +33,15 @@ const InfoNetworkComponent: FC = () => {
       networkHolder
     );
     setInfoNetworkViewModel(viewModel);
+
+    return () => {
+      viewModel.destroyListener();
+    };
   }, [networkHolder]);
 
   useEffect(() => {
     if (infoNetworkViewModel) {
       infoNetworkViewModel.attachView(baseView);
-
-      return () => {
-        infoNetworkViewModel.destroyListener();
-      };
     }
   }, [infoNetworkViewModel]);
 

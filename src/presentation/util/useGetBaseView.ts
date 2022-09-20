@@ -22,7 +22,7 @@ const useBaseView = <T extends BaseViewModel>(
     }
 
     return view;
-  }, [update, networkHolder]);
+  }, [viewModel, update]);
 
   return [update, baseView];
 };

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FC, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useContext, useEffect, useRef, useState } from "react";
 import useGetNetworkFromQuery from "../../util/useGetNetworkFromQuery";
 import { NetworkCtx } from "../../util/NetworkCtx";
 import ShowNetworkViewModel from "../../view-model/ShowNetwork/ShowNetworkViewModel";
@@ -30,15 +30,15 @@ const ShowNetworkComponent: FC = () => {
   useEffect(() => {
     const viewModel = new ShowNetworkViewModelImpl(networkHolder);
     setShowNetworkViewModel(viewModel);
+
+    return () => {
+      viewModel.destroyListener();
+    };
   }, [networkHolder]);
 
   useEffect(() => {
     if (showNetworkViewModel) {
       showNetworkViewModel.attachView(baseView);
-
-      return () => {
-        showNetworkViewModel.destroyListener();
-      };
     }
   }, [showNetworkViewModel]);
 

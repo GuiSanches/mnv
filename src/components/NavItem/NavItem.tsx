@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, memo, useEffect, useMemo, useState } from "react";
 import Modal from "../Modal";
 import { NavItem, NavLink } from "./styles";
 
@@ -25,7 +25,14 @@ const Navitem = <T extends object>({ Component, title }: Props<T>) => {
         <NavLink onClick={() => handleItemClick()}>{title}</NavLink>
       </NavItem>
 
-      {Open && <Modal setOpen={setOpen} content={content} idPortal="__next" />}
+      {
+        <Modal
+          open={Open}
+          setOpen={setOpen}
+          content={content}
+          idPortal="__next"
+        />
+      }
     </>
   );
 };

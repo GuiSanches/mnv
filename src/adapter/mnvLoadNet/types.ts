@@ -20,16 +20,6 @@ export interface Edge {
   color: string;
 }
 
-export interface GraphAPI {
-  Nodes: Node[];
-  Edges: Edge[];
-}
-
-export type InfoResult = {
-  result: [number[], number, number[]];
-  method: string;
-};
-
 export type NetworkContainer = {
   nodes: Node[];
   edges: Edge[];

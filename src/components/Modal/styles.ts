@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
-export const ModalContainer = styled.div`
+export const ModalContainer = styled.div<{ isShow: boolean }>`
   display: flex;
   flex-direction: column;
-  z-index: 30;
+  z-index: ${(props) => (props.isShow ? 30 : -1)};
+  opacity: ${(props) => (props.isShow ? 1 : 0)};
   position: absolute;
   box-shadow: 8px 8px 8px 8px #888888;
   touch-action: none;

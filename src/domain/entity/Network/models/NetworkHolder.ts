@@ -6,12 +6,11 @@ import NetworkListener from "./NetworkListener";
 export default class NetworkHolder {
   private networkListeners: NetworkListener[];
   private network: NetworkResult;
-  public name: string;
+  public child: NetworkHolder | null = null;
 
-  public constructor(name: string) {
+  public constructor() {
     this.networkListeners = [];
     this.network = {} as NetworkResult;
-    this.name = name;
   }
 
   public onNetworkChanged(): void {
@@ -38,9 +37,10 @@ export default class NetworkHolder {
   }
 
   public removeNetworkListener(networkListener: NetworkListener): void {
-    this.networkListeners.splice(
-      this.networkListeners.indexOf(networkListener)
-    );
+    const id = this.networkListeners.indexOf(networkListener);
+    if (id !== -1) {
+      this.networkListeners.splice(id, 1);
+    }
   }
 
   private notifyInfoListeners(): void {
