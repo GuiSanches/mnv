@@ -19,6 +19,7 @@ import LoadDefaultNetworkChildUseCase from "../../../../domain/interactors/Netwo
 import NetworkHolder from "../../../../domain/entity/Network/models/NetworkHolder";
 import LoadNetworkChildViewModelImpl from "../../../view-model/LoadChild/LoadNetworkChildViewModelImpl";
 import LoadNetworkChildViewModel from "../../../view-model/LoadChild/LoadNetworkChildViewModel";
+import useBaseView from "../../../util/useGetBaseView";
 
 interface Props {
   networkHolder: NetworkHolder;
@@ -34,6 +35,11 @@ const DefaultChildNetwork: FC<Props> = ({ networkHolder, options }) => {
 
   const [loadNetworkChildViewModel, setLoadNetworkChildViewModel] =
     useState<LoadNetworkChildViewModel>();
+
+  const [, baseView] = useBaseView<LoadNetworkChildViewModel>(
+    networkHolder,
+    loadNetworkChildViewModel
+  );
 
   const [selectedValue, setSelectedValue] = useState("-1");
 
@@ -55,11 +61,9 @@ const DefaultChildNetwork: FC<Props> = ({ networkHolder, options }) => {
 
   useEffect(() => {
     if (loadNetworkChildViewModel) {
-      return () => {
-        loadNetworkChildViewModel.destroyListener();
-      };
+      loadNetworkChildViewModel.attachView(baseView);
     }
-  }, [loadNetworkChildViewModel]);
+  });
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedValue(e.target.value);

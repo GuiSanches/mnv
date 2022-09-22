@@ -3,7 +3,6 @@ import {
   ChangeEvent,
   FC,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -53,7 +52,7 @@ const SelectNetwork: FC<Props> = () => {
       },
     });
   };
-  
+
   return (
     <select value={value} onChange={handleChange}>
       {options}

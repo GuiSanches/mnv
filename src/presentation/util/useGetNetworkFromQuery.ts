@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { FC, useMemo } from "react";
+import { FC, useEffect, useMemo } from "react";
 import NetworkHolder from "../../domain/entity/Network/models/NetworkHolder";
 
 const useGetNetworkFromQuery = (networkHolders: NetworkHolder[]) => {

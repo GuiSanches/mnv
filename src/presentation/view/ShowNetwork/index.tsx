@@ -60,6 +60,10 @@ const ShowNetworkComponent: FC = () => {
     };
   }, [update, networkHolder]);
 
+  useEffect(() => {
+    console.log("Selected changed", networkHolders);
+  }, [networkHolder])
+
   return (
     <Container>
       <Canva ref={CanvaRef}>

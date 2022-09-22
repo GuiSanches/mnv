@@ -51,12 +51,15 @@ export default class LoadNetworkViewModelImpl
   };
 
   public onLoadDefaultNetwork = async (filename: string) => {
-    this.isLoaded = true;
-    this.notifyViewAboutChanges();
+    this.setLoading(true);
     await this.loadNetworksUseCase.loadDefaultNetwork.loadDefaultNetwork(
       filename
     );
-    this.isLoaded = false;
+    this.setLoading(false);
+  };
+
+  private setLoading = (loading: boolean): void => {
+    this.isLoaded = loading;
     this.notifyViewAboutChanges();
   };
 

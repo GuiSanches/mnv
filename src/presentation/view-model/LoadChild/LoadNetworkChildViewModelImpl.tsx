@@ -44,13 +44,21 @@ export default class LoadNetworkChildViewModelImpl
     this.notifyViewAboutChanges();
   };
 
-  public onLoadDefaultNetwork = async (filename: string) : Promise<NetworkHolder | null> => {
-    this.isLoaded = true;
-    this.notifyViewAboutChanges();
-    const networkHolder = await this.loadNetworksChildUseCase.loadDefaultNetworkChild(filename);
-    this.isLoaded = false;
-    this.notifyViewAboutChanges();
+  public onLoadDefaultNetwork = async (
+    filename: string
+  ): Promise<NetworkHolder | null> => {
+    this.setLoading(true);
+    const networkHolder =
+      await this.loadNetworksChildUseCase.loadDefaultNetworkChild(filename);
+
+    this.setLoading(false);
+
     return networkHolder;
+  };
+
+  private setLoading = (loading: boolean): void => {
+    this.isLoaded = loading;
+    this.notifyViewAboutChanges();
   };
 
   public onModalClick = (): void => {};

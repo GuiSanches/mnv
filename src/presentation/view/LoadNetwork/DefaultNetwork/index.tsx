@@ -1,9 +1,8 @@
-import { ChangeEvent, FC, MouseEvent, useEffect, useState } from "react";
+import { ChangeEvent, FC, MouseEvent, useState } from "react";
 import { Container, Input, Select, Submit } from "./styles";
 import {
   Line,
   Label,
-  InputGroup,
   InputGroupPrepend,
   InputGroupText,
 } from "../../../../../styles/global";
