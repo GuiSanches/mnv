@@ -6,6 +6,7 @@ import NetworkListener from "./NetworkListener";
 export default class NetworkHolder {
   private networkListeners: NetworkListener[];
   private network: NetworkResult;
+  private netUI?: any;
   public child: NetworkHolder | null = null;
 
   public constructor() {
@@ -25,6 +26,15 @@ export default class NetworkHolder {
 
   public getNetwork() {
     return this.network;
+  }
+
+  public setNetUI(netUI: any) {
+    this.netUI = netUI;
+    this.notifyInfoListeners();
+  }
+
+  public getNetUI() {
+    return this.netUI;
   }
 
   public onNetworkInfoChanged(networkInfoResult: NetworkInfoResult): void {

@@ -22,9 +22,8 @@ const ShowNetworkComponent: FC = () => {
   const CanvaRef = useRef<HTMLDivElement>(null);
   const [initNetContainer, updateNet] = useNetV(CanvaRef, networkHolder);
 
-  const [update, baseView] = useBaseView<ShowNetworkViewModel>(
-    showNetworkViewModel
-  );
+  const [update, baseView] =
+    useBaseView<ShowNetworkViewModel>(showNetworkViewModel);
 
   useEffect(() => {
     const viewModel = new ShowNetworkViewModelImpl(networkHolder);
@@ -47,6 +46,7 @@ const ShowNetworkComponent: FC = () => {
   useEffect(() => {
     const UI = initNetContainer();
     setNetUI(UI);
+    networkHolder.setNetUI(UI);
 
     /* 
     Updates NetworkHolder nodes position
@@ -61,7 +61,7 @@ const ShowNetworkComponent: FC = () => {
 
   useEffect(() => {
     console.log("Selected changed", networkHolders);
-  }, [networkHolder])
+  }, [networkHolder]);
 
   return (
     <Container>

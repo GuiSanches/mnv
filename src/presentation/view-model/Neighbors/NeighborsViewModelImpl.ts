@@ -1,32 +1,43 @@
+import NetworkHolder from "../../../domain/entity/Network/models/NetworkHolder";
+import NetworkListener from "../../../domain/entity/Network/models/NetworkListener";
 import GetNodesNeighborsUseCase from "../../../domain/interactors/Network/Neighbors/GetNodesNeighborsUseCase";
 import BaseView from "../../view/BaseView";
 import NeighborsViewModel from "./NeighborsViewModel";
 
-export default class NeighborsViewModelImpl implements NeighborsViewModel {
+export default class NeighborsViewModelImpl
+  implements NeighborsViewModel, NetworkListener
+{
   private baseView?: BaseView;
   private getNodesNeighborsUseCase: GetNodesNeighborsUseCase;
+  private networkHolder: NetworkHolder;
 
   public isLoaded: boolean;
   public selected: boolean;
   public isKeep: boolean;
+  public type: "network" | "info";
 
-  public constructor(getNodesNeighborsUseCase: GetNodesNeighborsUseCase) {
+  public constructor(
+    networkHolder: NetworkHolder,
+    getNodesNeighborsUseCase: GetNodesNeighborsUseCase
+  ) {
     this.isLoaded = false;
     this.selected = false;
     this.isKeep = false;
-
     this.getNodesNeighborsUseCase = getNodesNeighborsUseCase;
+
+    this.type = "info";
+    this.networkHolder = networkHolder;
+    this.networkHolder.addNetworkListener(this);
   }
+  public onNetworkChanged = (): void => {
+    this.notifyViewAboutChanges();
+  };
+  public destroyListener = (): void => {
+    this.networkHolder.removeNetworkListener(this);
+  };
 
   private setLoading = (loading: boolean): void => {
     this.isLoaded = loading;
-    this.notifyViewAboutChanges();
-  };
-
-  private loadingCallback = (callback: Function): void => {
-    this.setLoading(true);
-    callback();
-    this.setLoading(false);
   };
 
   private notifyViewAboutChanges = (): void => {
@@ -47,7 +58,9 @@ export default class NeighborsViewModelImpl implements NeighborsViewModel {
   public onSwitchSelected(): void {
     this.switchSelected();
 
-    this.loadingCallback(this.handleSwitch);
+    this.setLoading(true);
+    this.handleSwitch();
+    this.setLoading(false);
   }
 
   public onModalClick(): void {}

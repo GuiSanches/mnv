@@ -30,13 +30,13 @@ export default class GetNodesNeighborsUseCase {
     const links = this.netUI.links();
 
     const onMouseOver = () => {
-      links.forEach(this.unHighlightLink);
-      neighborLinks.forEach(this.highlightLink);
+      links.forEach(this.unHighlightLink.bind(this));
+      neighborLinks.forEach(this.highlightLink.bind(this));
       this.netUI.draw();
     };
 
     const onMouseOut = () => {
-      links.forEach(this.highlightLink);
+      links.forEach(this.highlightLink.bind(this));
       this.netUI.draw();
     };
 

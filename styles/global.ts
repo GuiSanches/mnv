@@ -67,36 +67,98 @@ export const FormControl = styled.input`
   font-weight: 400;
   line-height: 1.5;
   color: #495057;
-  background-color: #FFF;
+  background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
-  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   overflow: visible;
 `;
 
 export const Button = styled.button`
-    border: none;
-    background-color: #e9ecef;
-    border: 1px solid #ced4da;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    padding: .375rem .75rem;
-    align-items: center;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    text-align: center;
-    white-space: nowrap;
-    border-left: none;
-    display: flex;
-    justify-content: space-between;
+  border: none;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 0.375rem 0.75rem;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  text-align: center;
+  white-space: nowrap;
+  border-left: none;
+  display: flex;
+  justify-content: space-between;
 
-    & > span {
-        margin-right: 0.3rem;
-    }
+  & > span {
+    margin-right: 0.3rem;
+  }
+`;
+
+export const CheckboxWrapper = styled.div`
+  display: flex;
+  flex: 1;
+  padding-left: 1.75rem;
+  transition: all 0.15s ease-in-out;
 `
+export const CustomSwitch = styled.div`
+    padding-left: 2.25rem;
+    position: relative.
+    display: block;
+    min-height: 1.5rem;
+`;
+
+export const CustomControlCheckbox = styled.input`
+  box-sizing: border-box;
+  padding: 0;
+  position: absolute;
+  left: -0.2rem;
+  top: calc(1rem - 0.8rem);
+  z-index: 1;
+  width: .75rem;
+  height: .75rem;
+  text-decoration: none;
+  appearance: none;
+  background-color: #adb5bd;
+  border-radius: 100%;
+  
+  
+  &:checked {
+    background-color: #FFF;
+    left: 0.3rem;
+
+    & ~ label::before {
+      background-color: #007bff;
+    }
+  }
+`;
+
+export const CustomControlLabel = styled.label`
+  position: relative;
+  margin-bottom: 0;
+  vertical-align: top;
+
+  &::before {
+    display: block;
+    position: absolute;
+    height: 1rem;
+    content: "";
+    // background-color: #fff;
+    border: #adb5bd solid 1px;
+    left: -2.25rem;
+    width: 1.75rem;
+    pointer-events: all;
+    border-radius: 0.5rem;
+
+    // background-color: #adb5bd;
+    border-radius: 0.5rem;
+
+    transition: all 0.15s ease-in-out;
+  }
+`;
