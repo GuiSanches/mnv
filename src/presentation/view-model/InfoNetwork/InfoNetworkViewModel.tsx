@@ -10,6 +10,4 @@ export default interface InfoNetworkViewModel extends BaseModalModel {
     onComputeAverageDegree(): void;
     onComputeAverageBetweenness(): void;
     onComputeAverageCloseness(): void;
-
-    destroyListener(): void;
 }

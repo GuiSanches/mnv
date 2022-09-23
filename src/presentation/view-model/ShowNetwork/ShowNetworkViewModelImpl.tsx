@@ -6,11 +6,11 @@ import ShowNetworkViewModel from "./ShowNetworkViewModel";
 export default class ShowNetworkViewModelImpl
   implements ShowNetworkViewModel, NetworkListener
 {
-  public isLoaded: boolean;
-  public type: "network" | "info";
-
   private baseView?: BaseView;
   private networkHolder: NetworkHolder;
+
+  public isLoaded: boolean;
+  public type: "network" | "info";
 
   constructor(networkHolder: NetworkHolder) {
     this.type = "network";

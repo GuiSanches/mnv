@@ -19,7 +19,6 @@ const LoadNetworkComponent: FC = () => {
   const [loadNetworkViewModel, setLoadNetworkViewModel] =
     useState<LoadNetworkViewModel>();
   const [, baseView] = useBaseView<LoadNetworkViewModel>(
-    networkHolder,
     loadNetworkViewModel
   );
 
@@ -29,15 +28,8 @@ const LoadNetworkComponent: FC = () => {
       networkHolder
     );
 
-    const viewModel = new LoadNetworkViewModelImpl(
-      loadNetworksUseCase,
-      networkHolder
-    );
+    const viewModel = new LoadNetworkViewModelImpl(loadNetworksUseCase);
     setLoadNetworkViewModel(viewModel);
-
-    return () => {
-      viewModel.destroyListener();
-    };
   }, [networkHolder]);
 
   useEffect(() => {

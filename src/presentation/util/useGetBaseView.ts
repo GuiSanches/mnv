@@ -1,10 +1,8 @@
 import { useMemo, useState } from "react";
-import NetworkHolder from "../../domain/entity/Network/models/NetworkHolder";
 import BaseViewModel from "../view-model/BaseViewModel";
 import BaseView from "../view/BaseView";
 
 const useBaseView = <T extends BaseViewModel>(
-  networkHolder: NetworkHolder,
   viewModel?: T
 ): [boolean, BaseView] => {
   const [update, setUpdate] = useState<boolean>(false);

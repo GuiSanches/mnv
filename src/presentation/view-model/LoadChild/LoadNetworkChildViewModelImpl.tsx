@@ -1,41 +1,37 @@
-import { NetworkContainer } from "../../../adapter/mnvLoadNet/types";
 import NetworkHolder from "../../../domain/entity/Network/models/NetworkHolder";
-import NetworkListener from "../../../domain/entity/Network/models/NetworkListener";
 import LoadDefaultNetworkChildUseCase from "../../../domain/interactors/Network/LoadingNetwork/LoadDefaultNetworkChildUseCase";
 import BaseView from "../../view/BaseView";
 import LoadNetworkChildViewModel from "./LoadNetworkChildViewModel";
 
 export default class LoadNetworkChildViewModelImpl
-  implements LoadNetworkChildViewModel, NetworkListener
+  implements LoadNetworkChildViewModel
 {
   public defaultNetwork: string;
   public defaultNetworkOptions: string[];
   public isKeep: boolean;
-  public type: "network" | "info";
   isLoaded: boolean;
 
   private baseView?: BaseView;
   private loadNetworksChildUseCase: LoadDefaultNetworkChildUseCase;
-  private networkHolder: NetworkHolder;
 
-  public constructor(
-    loadNetworksUseCase: LoadDefaultNetworkChildUseCase,
-    networkHolder: NetworkHolder
-  ) {
-    this.type = "network";
+  public constructor(loadNetworksUseCase: LoadDefaultNetworkChildUseCase) {
     this.isLoaded = false;
     this.defaultNetwork = "";
     this.isKeep = false;
 
     this.loadNetworksChildUseCase = loadNetworksUseCase;
-    this.networkHolder = networkHolder;
     this.defaultNetworkOptions = [""];
-
-    this.networkHolder.addNetworkListener(this);
   }
 
-  public destroyListener = (): void => {
-    this.networkHolder.removeNetworkListener(this);
+  private setLoading = (loading: boolean): void => {
+    this.isLoaded = loading;
+    this.notifyViewAboutChanges();
+  };
+
+  private notifyViewAboutChanges = (): void => {
+    if (this.baseView) {
+      this.baseView.onViewModelChanged();
+    }
   };
 
   public ListDefaultNetworks = async () => {
@@ -56,16 +52,7 @@ export default class LoadNetworkChildViewModelImpl
     return networkHolder;
   };
 
-  private setLoading = (loading: boolean): void => {
-    this.isLoaded = loading;
-    this.notifyViewAboutChanges();
-  };
-
   public onModalClick = (): void => {};
-
-  public onNetworkChanged = (): void => {
-    // console.log(this.networkHolder.getNetwork());
-  };
 
   public attachView = (baseView: BaseView): void => {
     this.baseView = baseView;
@@ -73,11 +60,5 @@ export default class LoadNetworkChildViewModelImpl
 
   public detachView = (): void => {
     this.baseView = undefined;
-  };
-
-  private notifyViewAboutChanges = (): void => {
-    if (this.baseView) {
-      this.baseView.onViewModelChanged();
-    }
   };
 }

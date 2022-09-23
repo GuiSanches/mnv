@@ -21,7 +21,6 @@ const InfoNetworkComponent: FC = () => {
     useState<InfoNetworkViewModel>();
 
   const [, baseView] = useBaseView<InfoNetworkViewModel>(
-    networkHolder,
     infoNetworkViewModel
   );
 

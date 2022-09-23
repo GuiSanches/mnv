@@ -37,7 +37,6 @@ const DefaultChildNetwork: FC<Props> = ({ networkHolder, options }) => {
     useState<LoadNetworkChildViewModel>();
 
   const [, baseView] = useBaseView<LoadNetworkChildViewModel>(
-    networkHolder,
     loadNetworkChildViewModel
   );
 
@@ -48,15 +47,10 @@ const DefaultChildNetwork: FC<Props> = ({ networkHolder, options }) => {
       new LoadDefaultNetworkChildUseCase(networkRepository, networkHolder);
 
     const viewModel = new LoadNetworkChildViewModelImpl(
-      loadNetworksChildUseCase,
-      networkHolder
+      loadNetworksChildUseCase
     );
 
     setLoadNetworkChildViewModel(viewModel);
-
-    return () => {
-      viewModel.destroyListener();
-    };
   }, [networkHolder]);
 
   useEffect(() => {

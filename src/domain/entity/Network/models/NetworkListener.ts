@@ -2,6 +2,8 @@
 export default interface NetworkListener {
     type: listenerType;
     onNetworkChanged(): void;
+
+    destroyListener(): void;
 }
 
 type listenerType = 'network' | 'info';

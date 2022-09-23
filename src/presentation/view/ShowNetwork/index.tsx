@@ -23,7 +23,6 @@ const ShowNetworkComponent: FC = () => {
   const [initNetContainer, updateNet] = useNetV(CanvaRef, networkHolder);
 
   const [update, baseView] = useBaseView<ShowNetworkViewModel>(
-    networkHolder,
     showNetworkViewModel
   );
 

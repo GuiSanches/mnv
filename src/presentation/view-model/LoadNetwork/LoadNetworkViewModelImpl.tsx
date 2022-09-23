@@ -1,31 +1,21 @@
 import { NetworkContainer } from "../../../adapter/mnvLoadNet/types";
-import NetworkHolder from "../../../domain/entity/Network/models/NetworkHolder";
-import NetworkListener from "../../../domain/entity/Network/models/NetworkListener";
 import LoadNetworksUseCase from "../../../domain/interactors/Network/LoadingNetwork/LoadNetworksUseCase";
 import BaseView from "../../view/BaseView";
 import LoadNetworkViewModel from "./LoadNetworkViewModel";
 
-export default class LoadNetworkViewModelImpl
-  implements LoadNetworkViewModel, NetworkListener
-{
+export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel {
   public JsonFile: string;
   public defaultNetwork: string;
   public defaultNetworkOptions: string[];
   public isKeep: boolean;
   public nColFile: string;
   public nColFileType: string;
-  public type: "network" | "info";
   isLoaded: boolean;
 
   private baseView?: BaseView;
   private loadNetworksUseCase: LoadNetworksUseCase;
-  private networkHolder: NetworkHolder;
 
-  public constructor(
-    loadNetworksUseCase: LoadNetworksUseCase,
-    networkHolder: NetworkHolder
-  ) {
-    this.type = "network";
+  public constructor(loadNetworksUseCase: LoadNetworksUseCase) {
     this.isLoaded = false;
     this.JsonFile = "";
     this.defaultNetwork = "";
@@ -34,14 +24,18 @@ export default class LoadNetworkViewModelImpl
     this.nColFileType = "";
 
     this.loadNetworksUseCase = loadNetworksUseCase;
-    this.networkHolder = networkHolder;
     this.defaultNetworkOptions = [""];
-
-    this.networkHolder.addNetworkListener(this);
   }
 
-  public destroyListener = (): void => {
-    this.networkHolder.removeNetworkListener(this);
+  private setLoading = (loading: boolean): void => {
+    this.isLoaded = loading;
+    this.notifyViewAboutChanges();
+  };
+
+  private notifyViewAboutChanges = (): void => {
+    if (this.baseView) {
+      this.baseView.onViewModelChanged();
+    }
   };
 
   public ListDefaultNetworks = async () => {
@@ -58,17 +52,12 @@ export default class LoadNetworkViewModelImpl
     this.setLoading(false);
   };
 
-  private setLoading = (loading: boolean): void => {
-    this.isLoaded = loading;
-    this.notifyViewAboutChanges();
-  };
-
   public onLoadnColFile = (): void => {};
 
   public onModalClick = (): void => {};
 
   public onNetworkChanged = (): void => {
-    // console.log(this.networkHolder.getNetwork());
+    // this.notifyViewAboutChanges();
   };
 
   public onUploadJsonFile = (network: NetworkContainer): void => {
@@ -81,11 +70,5 @@ export default class LoadNetworkViewModelImpl
 
   public detachView = (): void => {
     this.baseView = undefined;
-  };
-
-  private notifyViewAboutChanges = (): void => {
-    if (this.baseView) {
-      this.baseView.onViewModelChanged();
-    }
   };
 }
