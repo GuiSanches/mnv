@@ -46,9 +46,11 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel {
 
   public onLoadDefaultNetwork = async (filename: string) => {
     this.setLoading(true);
+
     await this.loadNetworksUseCase.loadDefaultNetwork.loadDefaultNetwork(
       filename
     );
+    
     this.setLoading(false);
   };
 

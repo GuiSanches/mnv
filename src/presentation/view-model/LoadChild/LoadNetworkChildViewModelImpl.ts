@@ -44,6 +44,7 @@ export default class LoadNetworkChildViewModelImpl
     filename: string
   ): Promise<NetworkHolder | null> => {
     this.setLoading(true);
+    
     const networkHolder =
       await this.loadNetworksChildUseCase.loadDefaultNetworkChild(filename);
 

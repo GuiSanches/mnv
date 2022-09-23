@@ -23,19 +23,31 @@ export default class NeighborsViewModelImpl implements NeighborsViewModel {
     this.notifyViewAboutChanges();
   };
 
+  private loadingCallback = (callback: Function): void => {
+    this.setLoading(true);
+    callback();
+    this.setLoading(false);
+  };
+
   private notifyViewAboutChanges = (): void => {
     if (this.baseView) {
       this.baseView.onViewModelChanged();
     }
   };
 
-  public switchSelected(): void {
+  private switchSelected(): void {
     this.selected = !this.selected;
+  }
 
-    this.setLoading(false);
+  private handleSwitch(): void {
     if (this.selected) this.getNodesNeighborsUseCase.enableGetNeighborsEvent();
     else this.getNodesNeighborsUseCase.disableGetNeighborsEvent();
-    this.setLoading(true);
+  }
+
+  public onSwitchSelected(): void {
+    this.switchSelected();
+
+    this.loadingCallback(this.handleSwitch);
   }
 
   public onModalClick(): void {}
