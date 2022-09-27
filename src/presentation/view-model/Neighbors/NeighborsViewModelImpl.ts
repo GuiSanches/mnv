@@ -50,12 +50,12 @@ export default class NeighborsViewModelImpl
     this.selected = !this.selected;
   }
 
-  private handleSwitch(): void {
+  private handleSwitch() {
     if (this.selected) this.getNodesNeighborsUseCase.enableGetNeighborsEvent();
     else this.getNodesNeighborsUseCase.disableGetNeighborsEvent();
   }
 
-  public onSwitchSelected(): void {
+  public onSwitchSelected() {
     this.switchSelected();
 
     this.setLoading(true);

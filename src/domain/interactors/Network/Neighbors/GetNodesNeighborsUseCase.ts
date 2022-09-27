@@ -17,42 +17,43 @@ export default class GetNodesNeighborsUseCase {
     });
   }
 
-  private highlightLink(link: any) {
-    this.setHighlightLink(link, this.HIGHLIGHT_OPACITY);
-  }
-
-  private unHighlightLink(link: any) {
-    this.setHighlightLink(link, this.UNHIGHLIGHT_OPACITY);
-  }
-
-  private getNodeMouseEvent(node: any) {
+  private addNodeMouseEvents(node: any, links: any) {
     const neighborLinks = node.neighborLinks();
-    const links = this.netUI.links();
+
+    const highlightLink = (link: any) => {
+      this.setHighlightLink(link, this.HIGHLIGHT_OPACITY);
+    };
+
+    const unHighlightLink = (link: any) => {
+      this.setHighlightLink(link, this.UNHIGHLIGHT_OPACITY);
+    };
 
     const onMouseOver = () => {
-      links.forEach(this.unHighlightLink.bind(this));
-      neighborLinks.forEach(this.highlightLink.bind(this));
+      links.forEach(unHighlightLink);
+      neighborLinks.forEach(highlightLink);
       this.netUI.draw();
     };
 
     const onMouseOut = () => {
-      links.forEach(this.highlightLink.bind(this));
+      links.forEach(highlightLink);
       this.netUI.draw();
     };
 
-    return [onMouseOver, onMouseOut];
+    node.on(this.MOUSE_OVER_EVENT, onMouseOver);
+    node.on(this.MOUSE_OUT_EVENT, onMouseOut);
   }
 
   public enableGetNeighborsEvent() {
-    this.netUI.nodes().forEach((node: any) => {
-      const [onMouseOver, onMouseOut] = this.getNodeMouseEvent(node);
-      node.on(this.MOUSE_OVER_EVENT, onMouseOver);
-      node.on(this.MOUSE_OUT_EVENT, onMouseOut);
-    });
+    const nodes = this.netUI.nodes();
+    const links = this.netUI.links();
+
+    nodes.forEach((node: any) => this.addNodeMouseEvents(node, links));
   }
 
   public disableGetNeighborsEvent() {
-    this.netUI.nodes().forEach((node: any) => {
+    const nodes = this.netUI.nodes();
+
+    nodes.forEach((node: any) => {
       node[this.MOUSE_OVER_CALLBACK_SET] = new Set();
     });
   }
