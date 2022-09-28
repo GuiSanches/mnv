@@ -15,6 +15,9 @@ import NeighborsViewModelImpl from "../../view-model/Neighbors/NeighborsViewMode
 import { Title } from "../InfoNetwork/styles";
 
 const NeighborsComponent: FC = () => {
+  const title = "Enable/Disable interaction";
+  const label = "Neighbors";
+  
   const [checked, setChecked] = useState<boolean>(false);
   const { networkHolders } = useContext(NetworkCtx);
 
@@ -53,7 +56,7 @@ const NeighborsComponent: FC = () => {
 
   return (
     <>
-      <Title>Enable/Disable interaction</Title>
+      <Title>{title}</Title>
       <Line />
 
       <InputGroup>
@@ -65,7 +68,7 @@ const NeighborsComponent: FC = () => {
             checked={checked}
             onChange={handleChange}
           />
-          <CustomControlLabel htmlFor="neighbors">Neighbors</CustomControlLabel>
+          <CustomControlLabel htmlFor="neighbors">{label}</CustomControlLabel>
         </CheckboxWrapper>
       </InputGroup>
     </>

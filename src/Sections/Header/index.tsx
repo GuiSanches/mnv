@@ -2,6 +2,7 @@ import { FC } from "react";
 import Navitem from "../../components/NavItem/NavItem";
 import SelectNetwork from "../../components/SelectNetwork";
 import InfoNetworkComponent from "../../presentation/view/InfoNetwork";
+import LayoutComponent from "../../presentation/view/Layout";
 import LoadNetworkComponent from "../../presentation/view/LoadNetwork";
 import NeighborsComponent from "../../presentation/view/Neighbors";
 
@@ -14,9 +15,11 @@ const Header: FC = () => {
         <NavbarNav>
           <Navitem title="Load Network" Component={LoadNetworkComponent} />
 
-          <Navitem title="Information" Component={InfoNetworkComponent} />
+          <Navitem title="Layout" Component={LayoutComponent} />
 
           <Navitem title="Neighbors" Component={NeighborsComponent} />
+
+          <Navitem title="Information" Component={InfoNetworkComponent} />
 
           <SelectNetwork />
         </NavbarNav>
