@@ -34,6 +34,7 @@ const NeighborsComponent: FC = () => {
     );
 
     viewModel.attachView(baseView);
+    setChecked(false);
     setNeighborViewModel(viewModel);
 
     return () => {
@@ -42,8 +43,12 @@ const NeighborsComponent: FC = () => {
   }, [networkHolder, update]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setChecked(e.currentTarget.checked);
-    neighborViewModel?.onSwitchSelected();
+    try {
+      neighborViewModel?.onSwitchSelected();
+      setChecked(e.currentTarget.checked);
+    } catch (e: any) {
+      alert(e.message);
+    }
   };
 
   return (

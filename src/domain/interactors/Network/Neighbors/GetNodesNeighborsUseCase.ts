@@ -43,7 +43,12 @@ export default class GetNodesNeighborsUseCase {
     node.on(this.MOUSE_OUT_EVENT, onMouseOut);
   }
 
+  private testNetworkLoaded() {
+    if (!this.netUI) throw new Error("Rede não carregada");
+  }
+
   public enableGetNeighborsEvent() {
+    this.testNetworkLoaded();
     const nodes = this.netUI.nodes();
     const links = this.netUI.links();
 
@@ -51,6 +56,7 @@ export default class GetNodesNeighborsUseCase {
   }
 
   public disableGetNeighborsEvent() {
+    this.testNetworkLoaded();
     const nodes = this.netUI.nodes();
 
     nodes.forEach((node: any) => {
