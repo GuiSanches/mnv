@@ -10,6 +10,7 @@ export const LoadingContainer = styled.div`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 0.8em;
 `;
 
 export const Select = styled.select`

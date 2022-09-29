@@ -2,19 +2,31 @@ import React, { createContext, FC, useEffect, useState } from "react";
 import NetworkApi from "../../data/Network/NetworkApi";
 
 import NetworkHolder from "../../domain/entity/Network/models/NetworkHolder";
+import ViewOptions from "../../domain/entity/Network/models/ViewOptions";
 import NetworkRepository from "../../domain/repository/Network/NetworkRepository";
 
 const networkHolder: NetworkHolder[] = [new NetworkHolder()];
 const networkRepository: NetworkRepository = new NetworkApi();
 
-interface CtxType {
-  networkHolders: NetworkHolder[];
-  networkRepository: NetworkRepository;
-  setNetworkHolders?: React.Dispatch<React.SetStateAction<NetworkHolder[]>>;
+interface Options {
+  options: ViewOptions;
+  setOptions?: React.Dispatch<React.SetStateAction<ViewOptions>>;
 }
-const DEFAULT_VALUE = {
+
+interface Network {
+  networkHolders: NetworkHolder[];
+  setNetworkHolders?: React.Dispatch<React.SetStateAction<NetworkHolder[]>>;
+  networkRepository: NetworkRepository;
+}
+
+interface CtxType extends Options, Network {}
+
+const DEFAULT_VALUE: CtxType = {
   networkHolders: networkHolder,
   networkRepository: networkRepository,
+  options: {
+    layout: "Pages",
+  },
 };
 
 export const NetworkCtx = createContext<CtxType>(DEFAULT_VALUE);
@@ -28,12 +40,16 @@ export const NetworkContext: React.FC<{ children?: React.ReactChild }> = ({
     DEFAULT_VALUE.networkHolders
   );
 
+  const [options, setOptions] = useState(DEFAULT_VALUE.options);
+
   return (
     <NetworkProvider
       value={{
         networkHolders,
         setNetworkHolders,
         networkRepository: DEFAULT_VALUE.networkRepository,
+        options,
+        setOptions,
       }}
     >
       {children}

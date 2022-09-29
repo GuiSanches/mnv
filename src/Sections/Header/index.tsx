@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import Navitem from "../../components/NavItem/NavItem";
 import SelectNetwork from "../../components/SelectNetwork";
 import InfoNetworkComponent from "../../presentation/view/InfoNetwork";
@@ -28,4 +28,4 @@ const Header: FC = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

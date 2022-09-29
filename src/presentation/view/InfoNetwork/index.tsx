@@ -15,14 +15,12 @@ const InfoNetworkComponent: FC = () => {
   const title = `Network information`;
 
   const { networkHolders, networkRepository } = useContext(NetworkCtx);
-  const networkHolder = useGetNetworkFromQuery(networkHolders);
+  const [networkHolder] = useGetNetworkFromQuery(networkHolders);
 
   const [infoNetworkViewModel, setInfoNetworkViewModel] =
     useState<InfoNetworkViewModel>();
 
-  const [, baseView] = useBaseView<InfoNetworkViewModel>(
-    infoNetworkViewModel
-  );
+  const [, baseView] = useBaseView<InfoNetworkViewModel>(infoNetworkViewModel);
 
   useEffect(() => {
     const calculateNetworkInfosUseCase: CalculateNetworkInfosUseCase =

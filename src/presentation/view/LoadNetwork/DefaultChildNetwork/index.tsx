@@ -27,7 +27,7 @@ interface Props {
 }
 
 const DefaultChildNetwork: FC<Props> = ({ networkHolder, options }) => {
-  const title = `Default child (Select the same as parent)`;
+  const title = `Load next level`;
   const label = `Load a network:`;
 
   const { networkHolders, setNetworkHolders, networkRepository } =

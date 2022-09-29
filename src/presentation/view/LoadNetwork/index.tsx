@@ -14,7 +14,7 @@ import DefaultChildNetwork from "./DefaultChildNetwork";
 const LoadNetworkComponent: FC = () => {
   const { networkHolders, networkRepository } = useContext(NetworkCtx);
 
-  const networkHolder = useGetNetworkFromQuery(networkHolders);
+  const [networkHolder] = useGetNetworkFromQuery(networkHolders);
 
   const [loadNetworkViewModel, setLoadNetworkViewModel] =
     useState<LoadNetworkViewModel>();
@@ -50,7 +50,7 @@ const LoadNetworkComponent: FC = () => {
             options={loadNetworkViewModel.defaultNetworkOptions}
             onLoadNetwork={loadNetworkViewModel.onLoadDefaultNetwork}
             loaded={loadNetworkViewModel.isLoaded}
-            title="Default networks"
+            title="Load Original network"
           />
           <DefaultChildNetwork
             options={loadNetworkViewModel.defaultNetworkOptions}

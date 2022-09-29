@@ -17,15 +17,24 @@ import { Title } from "../InfoNetwork/styles";
 const NeighborsComponent: FC = () => {
   const title = "Enable/Disable interaction";
   const label = "Neighbors";
-  
-  const [checked, setChecked] = useState<boolean>(false);
-  const { networkHolders } = useContext(NetworkCtx);
 
-  const networkHolder = useGetNetworkFromQuery(networkHolders);
+  const [checked, setChecked] = useState<boolean>(false);
+
+  const { networkHolders } = useContext(NetworkCtx);
+  const [networkHolder] = useGetNetworkFromQuery(networkHolders);
 
   const [neighborViewModel, setNeighborViewModel] =
     useState<NeighborsViewModel>();
   const [update, baseView] = useBaseView<NeighborsViewModel>(neighborViewModel);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    try {
+      neighborViewModel?.onSwitchSelected();
+      setChecked(e.currentTarget.checked);
+    } catch (e: any) {
+      alert(e.message);
+    }
+  };
 
   useEffect(() => {
     const getNodesNeighborsUseCase: GetNodesNeighborsUseCase =
@@ -44,15 +53,6 @@ const NeighborsComponent: FC = () => {
       viewModel.destroyListener();
     };
   }, [networkHolder, update]);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    try {
-      neighborViewModel?.onSwitchSelected();
-      setChecked(e.currentTarget.checked);
-    } catch (e: any) {
-      alert(e.message);
-    }
-  };
 
   return (
     <>

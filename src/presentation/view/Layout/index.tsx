@@ -1,4 +1,12 @@
-import { ChangeEvent, FC, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  memo,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   CheckboxWrapper,
   CustomControlCheckbox,
@@ -6,22 +14,48 @@ import {
   InputGroup,
   Line,
 } from "../../../../styles/global";
+import { NetworkCtx } from "../../util/NetworkCtx";
+import useBaseView from "../../util/useGetBaseView";
+import LayoutViewModel from "../../view-model/Layout/LayoutViewModel";
+import LayoutViewModelImpl from "../../view-model/Layout/LayoutViewModelImpl";
 import { Title } from "../InfoNetwork/styles";
 
-const LayoutComponent: FC = () => {
+interface Props {}
+
+const LayoutComponent: FC<Props> = ({}) => {
   const title = "Enable/Disable Grid Visualization";
-  const label = "Grid (Better for MNV interactions)";
+  const label = "Grid (See child network)";
 
   const [checked, setChecked] = useState<boolean>(false);
 
+  const [layoutViewModel, setLayoutViewModel] = useState<LayoutViewModel>();
+  const [, baseView] = useBaseView<LayoutViewModel>(layoutViewModel);
+
+  const { options, setOptions } = useContext(NetworkCtx);
+  const previousOption = useMemo(() => options, []);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     try {
-      //   neighborViewModel?.onSwitchSelected();
-      setChecked(e.currentTarget.checked);
+      const checked = e.currentTarget.checked;
+      setChecked(checked);
+      if (setOptions) {
+        if (checked && layoutViewModel) setOptions(layoutViewModel.viewOption);
+        else {
+          setOptions(previousOption);
+        }
+      }
     } catch (e: any) {
       alert(e.message);
     }
   };
+
+  useEffect(() => {
+    const viewModel = new LayoutViewModelImpl();
+
+    viewModel.attachView(baseView);
+
+    setLayoutViewModel(viewModel);
+  }, []);
 
   return (
     <>
@@ -44,4 +78,4 @@ const LayoutComponent: FC = () => {
   );
 };
 
-export default LayoutComponent;
+export default memo(LayoutComponent);

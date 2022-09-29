@@ -8,19 +8,22 @@ import { Container, Canva } from "./styles";
 import useBaseView from "../../util/useGetBaseView";
 import { useNetV } from "../../../utils/useNetV";
 import { usePrevious } from "../../../utils/usePrevious";
+import NetworkHolder from "../../../domain/entity/Network/models/NetworkHolder";
 
-const ShowNetworkComponent: FC = () => {
+interface Props {
+  networkHolder: NetworkHolder;
+  NetV: any;
+}
+
+const ShowNetworkComponent: FC<Props> = ({ networkHolder, NetV }) => {
   const [showNetworkViewModel, setShowNetworkViewModel] =
     useState<ShowNetworkViewModel>();
 
   const [netUI, setNetUI] = useState<any>();
-
-  const { networkHolders } = useContext(NetworkCtx);
-  const networkHolder = useGetNetworkFromQuery(networkHolders);
   const prevNetworkHolder = usePrevious(networkHolder);
 
   const CanvaRef = useRef<HTMLDivElement>(null);
-  const [initNetContainer, updateNet] = useNetV(CanvaRef, networkHolder);
+  const [initNetContainer, updateNet] = useNetV(CanvaRef, networkHolder, NetV);
 
   const [update, baseView] =
     useBaseView<ShowNetworkViewModel>(showNetworkViewModel);
@@ -58,10 +61,6 @@ const ShowNetworkComponent: FC = () => {
       }
     };
   }, [update, networkHolder]);
-
-  useEffect(() => {
-    console.log("Selected changed", networkHolders);
-  }, [networkHolder]);
 
   return (
     <Container>

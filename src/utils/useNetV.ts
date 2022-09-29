@@ -9,7 +9,8 @@ import { hex2rgba } from "./Colors";
 */
 export const useNetV = (
   refs: RefObject<HTMLDivElement>,
-  networkHolder: NetworkHolder
+  networkHolder: NetworkHolder,
+  NetV: any
 ): [() => any, (netUI: any, networkHolder: NetworkHolder) => void] => {
   const network = useMemo(() => {
     return networkHolder.getNetwork();
@@ -34,12 +35,7 @@ export const useNetV = (
     };
   };
 
-  const generateNetVUI = (
-    NetV: any,
-    div: HTMLElement,
-    width: number,
-    height: number
-  ) => {
+  const generateNetVUI = (div: HTMLElement, width: number, height: number) => {
     div.replaceChildren("");
 
     return new NetV({
@@ -68,14 +64,13 @@ export const useNetV = (
   }, [refs]);
 
   const initNetContainer = useCallback(() => {
-    const NetV = require("netv/build/NetV.js").default;
     if (refs.current && network.network) {
       // (await import('netv')).default // Is broken but may show some documentation.
       const [div, width, height] = getRefProperties();
 
       div.replaceChildren("");
 
-      const networkUI = generateNetVUI(NetV, div, width, height);
+      const networkUI = generateNetVUI(div, width, height);
 
       const NodeLinkData = generateNetVData();
 
@@ -99,7 +94,7 @@ export const useNetV = (
       return networkUI;
     }
     return undefined;
-  }, [refs, network, getRefProperties]);
+  }, [refs, network, getRefProperties, NetV]);
 
   const updateNetworkHolder = (
     networkUI: any,
