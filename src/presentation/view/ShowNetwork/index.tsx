@@ -1,7 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FC, useContext, useEffect, useRef, useState } from "react";
-import useGetNetworkFromQuery from "../../util/useGetNetworkFromQuery";
-import { NetworkCtx } from "../../util/NetworkCtx";
+import { FC, useEffect, useRef, useState } from "react";
 import ShowNetworkViewModel from "../../view-model/ShowNetwork/ShowNetworkViewModel";
 import ShowNetworkViewModelImpl from "../../view-model/ShowNetwork/ShowNetworkViewModelImpl";
 import { Container, Canva } from "./styles";
@@ -50,9 +48,6 @@ const ShowNetworkComponent: FC<Props> = ({ networkHolder, NetV }) => {
     const UI = initNetContainer();
     setNetUI(UI);
     networkHolder.setNetUI(UI);
-
-    console.log("updated");
-
     /* 
     Updates NetworkHolder nodes position
     After component's ummount 
