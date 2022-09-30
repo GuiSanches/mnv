@@ -67,7 +67,7 @@ const ShowNetworkComponent: FC<Props> = ({ networkHolder, NetV }) => {
   return (
     <Container>
       <Canva ref={CanvaRef}>
-        {showNetworkViewModel && <h1>Interaja com o mouse</h1>}
+        {showNetworkViewModel && <h1>Carregue uma rede</h1>}
       </Canva>
     </Container>
   );

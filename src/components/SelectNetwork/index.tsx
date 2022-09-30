@@ -9,6 +9,7 @@ import {
 } from "react";
 import NetworkHolder from "../../domain/entity/Network/models/NetworkHolder";
 import { NetworkCtx } from "../../presentation/util/NetworkCtx";
+import { Select } from "./styles";
 
 interface Props {}
 
@@ -55,9 +56,9 @@ const SelectNetwork: FC<Props> = () => {
   };
 
   return (
-    <select value={value} onChange={handleChange}>
+    <Select value={value} onChange={handleChange}>
       {options}
-    </select>
+    </Select>
   );
 };
 

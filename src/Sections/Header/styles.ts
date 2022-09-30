@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.header`
-    height: 35px;
+    height: 40px;
     z-index: 2;
     color: white;
     padding: 0;
@@ -34,11 +34,13 @@ export const NavbarNav = styled.ul`
     display: flex;
     flex: 1;
     flex-direction: row;
-    padding-left: 0;
+    padding-left: 60px;
     margin-bottom: 0;
     margin-top: 0;
     list-style: none;
     justify-content: space-around;
+    align-items: center;
+    align-content: center;
 `
 
 export const NavItem = styled.li`

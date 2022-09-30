@@ -18,4 +18,9 @@ export const Canva = styled.div`
     margin: 0;
     padding: 0;
     border: 1px solid black;
+
+    & h1 {
+        margin: 1em 0 0 60px;
+        font-size: 1.1em;
+    }
 `
