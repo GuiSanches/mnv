@@ -51,6 +51,8 @@ const ShowNetworkComponent: FC<Props> = ({ networkHolder, NetV }) => {
     setNetUI(UI);
     networkHolder.setNetUI(UI);
 
+    console.log("updated");
+
     /* 
     Updates NetworkHolder nodes position
     After component's ummount 

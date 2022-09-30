@@ -1,27 +1,16 @@
-import {
-  FC,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import NetworkHolder from "../../domain/entity/Network/models/NetworkHolder";
 import { NetworkCtx } from "../../presentation/util/NetworkCtx";
 import useGetNetworkFromQuery from "../../presentation/util/useGetNetworkFromQuery";
 import ShowNetworkComponent from "../../presentation/view/ShowNetwork";
-import { usePrevious } from "../../utils/usePrevious";
 import { Container, Grid } from "./styles";
 
 const Canvas: FC = () => {
   const { options, networkHolders } = useContext(NetworkCtx);
-
-  const [netFromQuery, id] = useGetNetworkFromQuery(networkHolders);
-  const GRID_SIZE = 4;
+  const [netFromQuery] = useGetNetworkFromQuery(networkHolders);
 
   const [netV, setNetV] = useState<any>();
-
-  const [elements, setElements] = useState<JSX.Element[]>([<></>]);
+  const [elements, setElements] = useState<JSX.Element[]>([]);
 
   useEffect(() => {
     const NetV = require("netv/build/NetV.js").default;
@@ -29,40 +18,31 @@ const Canvas: FC = () => {
   }, []);
 
   useEffect(() => {
+    setElements([]);
     console.log("Selected changed", networkHolders);
   }, [netFromQuery]);
 
   useEffect(() => {
-    if (options.layout === "Grid") {
-      setElements([<></>]);
-    }
-  }, [options.layout, netFromQuery]);
-
-  useEffect(() => {
-    const populateElements = async () => {
-      if (options.layout === "Grid") {
-        let holder: NetworkHolder | null = netFromQuery;
-        for (let i = elements.length; i < 3; i++) {
-          await new Promise(() =>
-            setTimeout(() => {
-              if (holder) {
-                setElements([
-                  ...elements,
-                  <ShowNetworkComponent
-                    key={"ads" + i}
-                    networkHolder={holder}
-                    NetV={netV}
-                  />,
-                ]);
-                holder = netFromQuery.child;
-              }
-            }, 200)
+    const populateElements = () => {
+      const grid: JSX.Element[] = [];
+      let holder: NetworkHolder | null = netFromQuery;
+      for (let i = 0; i < 2; i++) {
+        if (holder) {
+          grid.push(
+            <ShowNetworkComponent
+              key={`grid-${i}`}
+              networkHolder={netFromQuery}
+              NetV={netV}
+            />
           );
+          holder = holder.child;
         }
       }
+      setElements([...grid]);
     };
-    populateElements();
-  }, [elements]);
+
+    if (options.layout === "Grid") populateElements();
+  }, [options.layout, netFromQuery, netV]);
 
   return (
     <Container>

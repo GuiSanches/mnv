@@ -64,12 +64,11 @@ export const useNetV = (
   }, [refs]);
 
   const initNetContainer = useCallback(() => {
+    const [div, width, height] = getRefProperties();
+    div.replaceChildren("");
+
     if (refs.current && network.network) {
       // (await import('netv')).default // Is broken but may show some documentation.
-      const [div, width, height] = getRefProperties();
-
-      div.replaceChildren("");
-
       const networkUI = generateNetVUI(div, width, height);
 
       const NodeLinkData = generateNetVData();
