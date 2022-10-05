@@ -50,17 +50,21 @@ export default class LoadDefaultNetworkChildUseCase {
     const previousNet = this.networkHolder.getNetwork().network;
     const forwardNet = netHolder.getNetwork().network;
 
-    connectors.forEach((connection) => {
-      const previousNodeId = parseInt(connection.source);
-      const forwardNodeId = parseInt(connection.target);
+    try {
+      connectors.forEach((connection) => {
+        const previousNodeId = parseInt(connection.source);
+        const forwardNodeId = parseInt(connection.target);
 
-      previousNet.nodes[previousNodeId].forward = [
-        forwardNet.nodes[forwardNodeId],
-      ];
+        previousNet.nodes[previousNodeId].forward = [
+          forwardNet.nodes[forwardNodeId],
+        ];
 
-      forwardNet.nodes[forwardNodeId].previous = [
-        previousNet.nodes[previousNodeId],
-      ];
-    });
+        forwardNet.nodes[forwardNodeId].previous = [
+          previousNet.nodes[previousNodeId],
+        ];
+      });
+    } catch (e: any) {
+      alert("Redes não são compatíveis");
+    }
   }
 }
