@@ -2,5 +2,6 @@
 type Layout = 'Grid' | 'Pages'
 
 export default interface ViewOptions {
-    layout: Layout
+    layout: Layout,
+    loading: boolean
 }

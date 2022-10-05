@@ -7,6 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { ClipLoader } from "react-spinners";
 import {
   CheckboxWrapper,
   CustomControlCheckbox,
@@ -16,6 +17,7 @@ import {
 } from "../../../../styles/global";
 import { NetworkCtx } from "../../util/NetworkCtx";
 import useBaseView from "../../util/useGetBaseView";
+import useGetNetworkFromQuery from "../../util/useGetNetworkFromQuery";
 import LayoutViewModel from "../../view-model/Layout/LayoutViewModel";
 import LayoutViewModelImpl from "../../view-model/Layout/LayoutViewModelImpl";
 import { Title } from "../InfoNetwork/styles";
@@ -29,9 +31,10 @@ const LayoutComponent: FC<Props> = ({}) => {
   const [checked, setChecked] = useState<boolean>(false);
 
   const [layoutViewModel, setLayoutViewModel] = useState<LayoutViewModel>();
-  const [, baseView] = useBaseView<LayoutViewModel>(layoutViewModel);
+  const [update, baseView] = useBaseView<LayoutViewModel>(layoutViewModel);
 
-  const { options, setOptions } = useContext(NetworkCtx);
+  const { options, setOptions, networkHolders } = useContext(NetworkCtx);
+  const [netFromQuery] = useGetNetworkFromQuery(networkHolders);
   const previousOption = useMemo(() => options, []);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -39,10 +42,10 @@ const LayoutComponent: FC<Props> = ({}) => {
       const checked = e.currentTarget.checked;
       setChecked(checked);
       if (setOptions) {
-        if (checked && layoutViewModel) setOptions(layoutViewModel.viewOption);
-        else {
-          setOptions(previousOption);
-        }
+        console.log("vai entrar");
+        if (checked && layoutViewModel) {
+          setOptions(layoutViewModel.viewOption);
+        } else setOptions(previousOption);
       }
     } catch (e: any) {
       alert(e.message);
@@ -50,12 +53,22 @@ const LayoutComponent: FC<Props> = ({}) => {
   };
 
   useEffect(() => {
-    const viewModel = new LayoutViewModelImpl();
+    const viewModel = new LayoutViewModelImpl(netFromQuery);
 
     viewModel.attachView(baseView);
-
     setLayoutViewModel(viewModel);
-  }, []);
+
+    return () => {
+      viewModel.destroyListener();
+    };
+  }, [netFromQuery]);
+
+  useEffect(() => {
+    setOptions!({
+      ...options,
+      loading: false,
+    });
+  }, [update]);
 
   return (
     <>
@@ -71,7 +84,16 @@ const LayoutComponent: FC<Props> = ({}) => {
             checked={checked}
             onChange={handleChange}
           />
-          <CustomControlLabel htmlFor="layout">{label}</CustomControlLabel>
+          <CustomControlLabel htmlFor="layout">
+            <ClipLoader
+              color={"#e3e3e3"}
+              loading={options.loading}
+              css={"border: red"}
+              size={15}
+            />
+
+            {label}
+          </CustomControlLabel>
         </CheckboxWrapper>
       </InputGroup>
     </>

@@ -26,6 +26,7 @@ const DEFAULT_VALUE: CtxType = {
   networkRepository: networkRepository,
   options: {
     layout: "Pages",
+    loading: false,
   },
 };
 

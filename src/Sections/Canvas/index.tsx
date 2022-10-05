@@ -25,8 +25,6 @@ const Canvas: FC = () => {
   }, []);
 
   useEffect(() => {
-    setElements([]);
-
     const viewModel = new CanvasViewModelImpl(netFromQuery);
     setCanvasViewModel(viewModel);
 
@@ -34,6 +32,10 @@ const Canvas: FC = () => {
       viewModel.destroyListener();
     };
   }, [netFromQuery]);
+
+  useEffect(() => {
+    if (options.layout === "Pages") setElements([]);
+  }, [options.layout]);
 
   useEffect(() => {
     if (canvasViewModel) canvasViewModel.attachView(baseView);
@@ -44,13 +46,6 @@ const Canvas: FC = () => {
       const grid: JSX.Element[] = [];
       let holder: NetworkHolder | null = netFromQuery;
 
-      const getChildNodesUseCase: GetChildNodesUseCase =
-        new GetChildNodesUseCase(holder);
-      try {
-        getChildNodesUseCase.enableChildNodesHighlight();
-      } catch (e: any) {
-        console.log("Não foi dessa vez");
-      }
       for (let i = 0; i < 2; i++) {
         if (holder) {
           grid.push(
@@ -67,7 +62,19 @@ const Canvas: FC = () => {
     };
 
     if (options.layout === "Grid") populateElements();
-  }, [options.layout, netFromQuery, netV, update]);
+  }, [options.layout, netFromQuery, netV]);
+
+  useEffect(() => {
+    if (options.layout === "Grid") {
+      try {
+        const getChildNodesUseCase: GetChildNodesUseCase =
+          new GetChildNodesUseCase(netFromQuery);
+        getChildNodesUseCase.enableChildNodesHighlight();
+      } catch (e: any) {
+        console.log("Não foi dessa vez");
+      }
+    }
+  }, [update]);
 
   return (
     <Container>

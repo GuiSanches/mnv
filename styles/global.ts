@@ -106,7 +106,7 @@ export const CheckboxWrapper = styled.div`
   flex: 1;
   padding-left: 1.75rem;
   transition: all 0.15s ease-in-out;
-`
+`;
 export const CustomSwitch = styled.div`
     padding-left: 2.25rem;
     position: relative.
@@ -121,16 +121,15 @@ export const CustomControlCheckbox = styled.input`
   left: -0.2rem;
   top: calc(1rem - 0.8rem);
   z-index: 1;
-  width: .75rem;
-  height: .75rem;
+  width: 0.75rem;
+  height: 0.75rem;
   text-decoration: none;
   appearance: none;
   background-color: #adb5bd;
   border-radius: 100%;
-  
-  
+
   &:checked {
-    background-color: #FFF;
+    background-color: #fff;
     left: 0.3rem;
 
     & ~ label::before {
@@ -160,5 +159,9 @@ export const CustomControlLabel = styled.label`
     border-radius: 0.5rem;
 
     transition: all 0.15s ease-in-out;
+  }
+
+  & span {
+    margin-right: 0.3em;
   }
 `;
