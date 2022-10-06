@@ -42,7 +42,6 @@ const LayoutComponent: FC<Props> = ({}) => {
       const checked = e.currentTarget.checked;
       setChecked(checked);
       if (setOptions) {
-        console.log("vai entrar");
         if (checked && layoutViewModel) {
           setOptions(layoutViewModel.viewOption);
         } else setOptions(previousOption);

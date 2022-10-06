@@ -48,16 +48,20 @@ const ShowNetworkComponent: FC<Props> = ({ networkHolder, NetV }) => {
     const UI = initNetContainer();
     setNetUI(UI);
     networkHolder.setNetUI(UI);
+  }, [update, networkHolder]);
+
+  useEffect(() => {
     /* 
     Updates NetworkHolder nodes position
     After component's ummount 
    */
     return () => {
-      if (netUI && networkHolder !== prevNetworkHolder) {
+      if (netUI) {
         updateNet(netUI, prevNetworkHolder);
+        netUI.dispose();
       }
     };
-  }, [update, networkHolder]);
+  }, [netUI]);
 
   return (
     <Container>

@@ -20,7 +20,7 @@ const Canvas: FC = () => {
   const [update, baseView] = useBaseView<CanvasViewModel>(canvasViewModel);
 
   useEffect(() => {
-    const NetV = require("netv/build/NetV.js").default;
+    const NetV = require("netv/build/NetV.min.js").default;
     setNetV(() => NetV);
   }, []);
 

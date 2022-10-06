@@ -1,4 +1,4 @@
-import { RefObject, useMemo, useCallback } from "react";
+import { RefObject, useMemo, useCallback, useEffect } from "react";
 import NetworkHolder from "../domain/entity/Network/models/NetworkHolder";
 import NetworkContainerResult from "../domain/entity/Network/structures/NetworkContainerResult";
 import { NodeResult } from "../domain/entity/Network/structures/NodeResult";
@@ -16,7 +16,7 @@ export const useNetV = (
     return networkHolder.getNetwork();
   }, [networkHolder]);
 
-  const generateNetVData = () => {
+  const generateNetVData = useCallback(() => {
     return {
       nodes: network.network.nodes.map((n) => ({
         id: n.id,
@@ -33,27 +33,30 @@ export const useNetV = (
         target: e.target,
       })),
     };
-  };
+  }, [network.network]);
 
-  const generateNetVUI = (div: HTMLElement, width: number, height: number) => {
-    div.replaceChildren("");
+  const generateNetVUI = useCallback(
+    (div: HTMLElement, width: number, height: number) => {
+      div.replaceChildren("");
 
-    return new NetV({
-      container: div,
-      nodeLimit: 1e5,
-      linkLimit: 1e7,
-      width,
-      height,
-      node: {
-        style: {
-          strokeWidth: 0.8,
+      return new NetV({
+        container: div,
+        nodeLimit: 1e5,
+        linkLimit: 1e7,
+        width,
+        height,
+        node: {
+          style: {
+            strokeWidth: 0.8,
+          },
         },
-      },
-      link: {
-        style: { strokeWidth: 1 },
-      },
-    });
-  };
+        link: {
+          style: { strokeWidth: 1 },
+        },
+      });
+    },
+    [NetV]
+  );
 
   const getRefProperties = useCallback((): [HTMLElement, number, number] => {
     const div = refs.current as HTMLElement;
