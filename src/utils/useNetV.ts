@@ -4,7 +4,7 @@ import NetworkContainerResult from "../domain/entity/Network/structures/NetworkC
 import { NodeResult } from "../domain/entity/Network/structures/NodeResult";
 import { hex2rgba } from "./Colors";
 
-/* 
+/**
     Hook to manage NetV drawing logic
 */
 export const useNetV = (
@@ -120,7 +120,7 @@ export const useNetV = (
         edges,
       };
 
-      networkHolder.onNetworkContainerChanged(networkContainer);
+      networkHolder.updateNetworkTopography(networkContainer);
     }
   };
 

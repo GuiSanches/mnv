@@ -1,4 +1,3 @@
-import NetworkInfoResult from "../../entity/Network/structures/NetworkInfoResult";
 import NetworkContainerResult from "../../entity/Network/structures/NetworkContainerResult";
 import { SubLayer } from "../../../adapter/mnvLoadNextLayer/types";
 

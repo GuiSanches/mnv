@@ -4,27 +4,28 @@ import CalculateNetworkInfosUseCase from "../../../domain/interactors/Network/Ca
 import BaseView from "../../view/BaseView";
 import InfoNetworkViewModel from "./InfoNetworkViewModel";
 
+/**
+ * Info View Model implementation
+ */
 export default class InfoNetworkViewModelImpl
   implements InfoNetworkViewModel, NetworkListener
 {
+  private baseView?: BaseView;
+  private infoNetworkUseCase: CalculateNetworkInfosUseCase;
+  private networkHolder: NetworkHolder;
+
+  public readonly type: "network" | "info" = "info";
   public numberOfVertices: number = 0;
   public numberOfEdges: number = 0;
   public averageDegree?: number;
   public averageBetweeness?: number;
   public averageCloseness?: number;
-  public isKeep: boolean;
-  public type: "network" | "info";
-
-  private baseView?: BaseView;
-  private infoNetworkUseCase: CalculateNetworkInfosUseCase;
-  private networkHolder: NetworkHolder;
+  public isKeep: boolean = false;
 
   public constructor(
     infoNetworkUseCase: CalculateNetworkInfosUseCase,
     networkHolder: NetworkHolder
   ) {
-    this.type = "info";
-    this.isKeep = false;
     this.infoNetworkUseCase = infoNetworkUseCase;
 
     this.networkHolder = networkHolder;
@@ -33,25 +34,52 @@ export default class InfoNetworkViewModelImpl
     this.getCalCulations();
   }
 
+  /**
+   * Get network cached information
+   */
+  private getCalCulations = () => {
+    this.numberOfEdges = this.networkHolder.getNetwork().network?.edges.length;
+    this.numberOfVertices =
+      this.networkHolder.getNetwork().network?.nodes.length;
+
+    if (this.networkHolder.getNetwork().Info) {
+      const { averageBetweenness, averageCloseness, averageDegree } =
+        this.networkHolder.getNetwork().Info;
+
+      this.averageBetweeness = averageBetweenness;
+      this.averageCloseness = averageCloseness;
+      this.averageDegree = averageDegree;
+    }
+  };
+
+  private notifyViewAboutChanges = (): void => {
+    if (this.baseView) {
+      this.baseView.onViewModelChanged();
+    }
+  };
+
+  /**
+   * Calculate average Degree and save it
+   */
   public onComputeAverageDegree = async () => {
-    await this.infoNetworkUseCase.calculateAvgDegree.calculateAvgDegree(
-      this.networkHolder.getNetwork().network
-    );
+    await this.infoNetworkUseCase.calculateAvgDegree.calculateAvgDegree();
     this.averageDegree = this.networkHolder.getNetwork().Info.averageDegree;
   };
 
+  /**
+   * Calculate average Betweenness and save it
+   */
   public onComputeAverageBetweenness = async () => {
-    await this.infoNetworkUseCase.calculateAvgBetweenness.calculateAvgBetweenness(
-      this.networkHolder.getNetwork().network
-    );
+    await this.infoNetworkUseCase.calculateAvgBetweenness.calculateAvgBetweenness();
     this.averageBetweeness =
       this.networkHolder.getNetwork().Info.averageBetweenness;
   };
 
+  /**
+   * Calculate average Closeness and save it
+   */
   public onComputeAverageCloseness = async () => {
-    await this.infoNetworkUseCase.calculateAvgCloseness.calculateAvgCloseness(
-      this.networkHolder.getNetwork().network
-    );
+    await this.infoNetworkUseCase.calculateAvgCloseness.calculateAvgCloseness();
     this.averageCloseness =
       this.networkHolder.getNetwork().Info.averageCloseness;
   };
@@ -72,25 +100,5 @@ export default class InfoNetworkViewModelImpl
   public onNetworkChanged = (): void => {
     this.getCalCulations();
     this.notifyViewAboutChanges();
-  };
-
-  private notifyViewAboutChanges = (): void => {
-    if (this.baseView) {
-      this.baseView.onViewModelChanged();
-    }
-  };
-
-  private getCalCulations = () => {
-    this.numberOfEdges = this.networkHolder.getNetwork().network?.edges.length;
-    this.numberOfVertices =
-      this.networkHolder.getNetwork().network?.nodes.length;
-
-    if (this.networkHolder.getNetwork().Info) {
-      const { averageBetweenness, averageCloseness, averageDegree } =
-        this.networkHolder.getNetwork().Info;
-      this.averageBetweeness = averageBetweenness;
-      this.averageCloseness = averageCloseness;
-      this.averageDegree = averageDegree;
-    }
   };
 }

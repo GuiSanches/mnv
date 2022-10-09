@@ -1,8 +1,13 @@
 import { useRouter } from "next/router";
-import { FC, useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import NetworkHolder from "../../domain/entity/Network/models/NetworkHolder";
 
-const useGetNetworkFromQuery = (networkHolders: NetworkHolder[]): [NetworkHolder, number] => {
+/**
+ * Get current networkholder from query params
+ */
+const useGetNetworkFromQuery = (
+  networkHolders: NetworkHolder[]
+): [NetworkHolder, number] => {
   const router = useRouter();
   const networkId = useMemo(() => Number(router.query["net"]) || 0, [router]);
 

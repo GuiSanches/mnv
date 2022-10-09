@@ -11,9 +11,7 @@ import NetworkHolder from "../../domain/entity/Network/models/NetworkHolder";
 import { NetworkCtx } from "../../presentation/util/NetworkCtx";
 import { Select } from "./styles";
 
-interface Props {}
-
-const SelectNetwork: FC<Props> = () => {
+const SelectNetwork: FC = () => {
   const { networkHolders, setNetworkHolders } = useContext(NetworkCtx);
   const [value, setValue] = useState<number>(0);
   const [updated, setUpdated] = useState<boolean>(false);

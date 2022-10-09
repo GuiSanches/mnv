@@ -4,8 +4,8 @@ import BaseView from "../../view/BaseView";
 import CanvasViewModel from "./CanvasViewModel";
 
 export default class CanvasViewModelImpl
-  implements CanvasViewModel, NetworkListener
-{
+  implements CanvasViewModel, NetworkListener {
+    
   private baseView?: BaseView;
   private networkHolder: NetworkHolder;
 

@@ -9,7 +9,7 @@ interface Props {
   title: string;
 }
 
-const Navitem = <T extends object>({ Component, title }: Props) => {
+const Navitem = ({ Component, title }: Props) => {
   const [Open, setOpen] = useState<boolean>(false);
   const handleItemClick = () => {
     setOpen(!Open);

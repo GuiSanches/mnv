@@ -10,21 +10,17 @@ export default class LayoutViewModelImpl
   private baseView?: BaseView;
   private networkHolder: NetworkHolder;
 
-  public isLoaded: boolean;
-  public gridVisualization: boolean;
-  public isKeep: boolean;
-  public viewOption: ViewOptions;
-  public type: "network" | "info";
+  public readonly type: "network" | "info" = "info";
+  public isLoaded: boolean = false;
+  public gridVisualization: boolean = false;
+  public isKeep: boolean = false;
+  public viewOption: ViewOptions = {
+    layout: "Grid",
+    loading: true,
+  };
 
   constructor(networkHolder: NetworkHolder) {
-    this.isLoaded = false;
-    this.gridVisualization = false;
     this.isKeep = false;
-    this.type = "info";
-    this.viewOption = {
-      layout: "Grid",
-      loading: true,
-    };
 
     this.networkHolder = networkHolder;
     this.networkHolder.addNetworkListener(this);

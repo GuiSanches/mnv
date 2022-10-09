@@ -2,6 +2,9 @@ import { useMemo, useState } from "react";
 import BaseViewModel from "../view-model/BaseViewModel";
 import BaseView from "../view/BaseView";
 
+/**
+ * BaseView hook for updates listeners
+ */
 const useBaseView = <T extends BaseViewModel>(
   viewModel?: T
 ): [boolean, BaseView] => {

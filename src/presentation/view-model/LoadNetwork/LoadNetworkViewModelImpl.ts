@@ -4,29 +4,25 @@ import BaseView from "../../view/BaseView";
 import LoadNetworkViewModel from "./LoadNetworkViewModel";
 
 export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel {
-  public JsonFile: string;
-  public defaultNetwork: string;
-  public defaultNetworkOptions: string[];
-  public isKeep: boolean;
-  public nColFile: string;
-  public nColFileType: string;
-  isLoaded: boolean;
-
   private baseView?: BaseView;
   private loadNetworksUseCase: LoadNetworksUseCase;
 
-  public constructor(loadNetworksUseCase: LoadNetworksUseCase) {
-    this.isLoaded = false;
-    this.JsonFile = "";
-    this.defaultNetwork = "";
-    this.isKeep = false;
-    this.nColFile = "";
-    this.nColFileType = "";
+  public JsonFile: string = "";
+  public defaultNetwork: string = "";
+  public defaultNetworkOptions: string[];
+  public isKeep: boolean = false;
+  public nColFile: string = "";
+  public nColFileType: string = "";
+  public isLoaded: boolean = false;
 
+  public constructor(loadNetworksUseCase: LoadNetworksUseCase) {
     this.loadNetworksUseCase = loadNetworksUseCase;
     this.defaultNetworkOptions = [""];
   }
 
+  /**
+   * Updates loading and notify view
+   */
   private setLoading = (loading: boolean): void => {
     this.isLoaded = loading;
     this.notifyViewAboutChanges();
@@ -38,19 +34,25 @@ export default class LoadNetworkViewModelImpl implements LoadNetworkViewModel {
     }
   };
 
+  /**
+   * Get default network list
+   */
   public ListDefaultNetworks = async () => {
     this.defaultNetworkOptions =
       await this.loadNetworksUseCase.loadDefaultNetwork.getDefaultNetworkList();
     this.notifyViewAboutChanges();
   };
 
+  /**
+   * Load default network
+   */
   public onLoadDefaultNetwork = async (filename: string) => {
     this.setLoading(true);
 
     await this.loadNetworksUseCase.loadDefaultNetwork.loadDefaultNetwork(
       filename
     );
-    
+
     this.setLoading(false);
   };
 

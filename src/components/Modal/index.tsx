@@ -1,6 +1,5 @@
 import React, {
   FC,
-  memo,
   ReactNode,
   useEffect,
   useRef,
@@ -56,27 +55,6 @@ const Modal: FC<Props> = ({ open, setOpen, content, idPortal }) => {
       id
     )
   );
-};
-
-interface Prop {
-  open: boolean;
-}
-
-export const withModal = <P extends Prop>(Component: FC<P>) => {
-  const Wrapper: FC<P> = ({ ...props }) => {
-    const content = () => <Component {...props} />;
-
-    return (
-      <Modal
-        setOpen={(open: boolean) => {}}
-        open={props.open}
-        content={content()}
-        idPortal="__next"
-      />
-    );
-  };
-
-  return Wrapper;
 };
 
 export default Modal;

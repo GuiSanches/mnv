@@ -60,7 +60,7 @@ const InfoNetworkComponent: FC = () => {
             />
             <ComputeElement
               title="Average degree:"
-              onCompute={infoNetworkViewModel.onComputeAverageDegree}
+              onCompute={infoNetworkViewModel.onComputeAverageDegree.bind(infoNetworkViewModel)}
               total={infoNetworkViewModel.averageDegree}
             />
             <ComputeElement

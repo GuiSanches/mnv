@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const NavItem = styled.li`
-
 `
 
 export const NavLink = styled.a`

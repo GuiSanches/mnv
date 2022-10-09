@@ -11,33 +11,36 @@ export default class NeighborsViewModelImpl
   private getNodesNeighborsUseCase: GetNodesNeighborsUseCase;
   private networkHolder: NetworkHolder;
 
-  public isLoaded: boolean;
-  public selected: boolean;
-  public isKeep: boolean;
-  public type: "network" | "info";
+  public readonly type: "network" | "info" = "info";
+  public isLoaded: boolean = false;
+  public selected: boolean = false;
+  public isKeep: boolean = false;
 
   public constructor(
     networkHolder: NetworkHolder,
     getNodesNeighborsUseCase: GetNodesNeighborsUseCase
   ) {
-    this.isLoaded = false;
-    this.selected = false;
-    this.isKeep = false;
     this.getNodesNeighborsUseCase = getNodesNeighborsUseCase;
 
-    this.type = "info";
     this.networkHolder = networkHolder;
     this.networkHolder.addNetworkListener(this);
   }
-  public onNetworkChanged = (): void => {
-    this.notifyViewAboutChanges();
-  };
-  public destroyListener = (): void => {
-    this.networkHolder.removeNetworkListener(this);
-  };
+
+  private handleSwitch() {
+    if (this.selected) this.getNodesNeighborsUseCase.enableGetNeighborsEvent();
+    else this.getNodesNeighborsUseCase.disableGetNeighborsEvent();
+  }
 
   private setLoading = (loading: boolean): void => {
     this.isLoaded = loading;
+  };
+
+  private switchSelected(): void {
+    this.selected = !this.selected;
+  }
+
+  public onNetworkChanged = (): void => {
+    this.notifyViewAboutChanges();
   };
 
   private notifyViewAboutChanges = (): void => {
@@ -46,14 +49,9 @@ export default class NeighborsViewModelImpl
     }
   };
 
-  private switchSelected(): void {
-    this.selected = !this.selected;
-  }
-
-  private handleSwitch() {
-    if (this.selected) this.getNodesNeighborsUseCase.enableGetNeighborsEvent();
-    else this.getNodesNeighborsUseCase.disableGetNeighborsEvent();
-  }
+  public destroyListener = (): void => {
+    this.networkHolder.removeNetworkListener(this);
+  };
 
   public onSwitchSelected() {
     this.switchSelected();

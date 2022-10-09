@@ -6,23 +6,23 @@ import LoadNetworkChildViewModel from "./LoadNetworkChildViewModel";
 export default class LoadNetworkChildViewModelImpl
   implements LoadNetworkChildViewModel
 {
-  public defaultNetwork: string;
-  public defaultNetworkOptions: string[];
-  public isKeep: boolean;
-  isLoaded: boolean;
-
   private baseView?: BaseView;
   private loadNetworksChildUseCase: LoadDefaultNetworkChildUseCase;
 
-  public constructor(loadNetworksUseCase: LoadDefaultNetworkChildUseCase) {
-    this.isLoaded = false;
-    this.defaultNetwork = "";
-    this.isKeep = false;
+  public defaultNetwork: string = "";
+  public isKeep: boolean = false;
+  public isLoaded: boolean = false;
+  public defaultNetworkOptions: string[];
 
+  public constructor(loadNetworksUseCase: LoadDefaultNetworkChildUseCase) {
     this.loadNetworksChildUseCase = loadNetworksUseCase;
     this.defaultNetworkOptions = [""];
   }
 
+  /**
+   * update isLoaded and notifies view
+   * @param {boolean} loading
+   */
   private setLoading = (loading: boolean): void => {
     this.isLoaded = loading;
     this.notifyViewAboutChanges();
@@ -34,17 +34,24 @@ export default class LoadNetworkChildViewModelImpl
     }
   };
 
+  /**
+   * Get default network options, notify view
+   */
   public ListDefaultNetworks = async () => {
     this.defaultNetworkOptions =
       await this.loadNetworksChildUseCase.getDefaultNetworkList();
     this.notifyViewAboutChanges();
   };
 
+  /**
+   * Load child networkholder
+   * @param {string} filename child option
+   */
   public onLoadDefaultNetwork = async (
     filename: string
   ): Promise<NetworkHolder | null> => {
     this.setLoading(true);
-    
+
     const networkHolder =
       await this.loadNetworksChildUseCase.loadDefaultNetworkChild(filename);
 

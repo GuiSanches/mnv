@@ -71,7 +71,6 @@ const DefaultChildNetwork: FC<Props> = ({ networkHolder, options }) => {
     );
     if (newNet && setNetworkHolders) {
       setNetworkHolders([...networkHolders, newNet]);
-      newNet.onNetworkChanged();
     }
   };
 

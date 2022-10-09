@@ -1,25 +1,36 @@
 import NetworkRepository from "../../../repository/Network/NetworkRepository";
 import NetworkHolder from "../../../entity/Network/models/NetworkHolder";
 import NetworkInfoResult from "../../../entity/Network/structures/NetworkInfoResult";
-import NetworkContainerResult from "../../../entity/Network/structures/NetworkContainerResult";
 
+/**
+ * Average closeness use case
+ */
 export default class CalculateAvgClosenessUseCase {
-    private networkHolder: NetworkHolder;
-    private networkRepository: NetworkRepository;
+  private networkHolder: NetworkHolder;
+  private networkRepository: NetworkRepository;
 
-    public constructor(networkRepository: NetworkRepository, networkHolder: NetworkHolder) {
-        this.networkHolder = networkHolder;
-        this.networkRepository = networkRepository;
-    }
+  public constructor(
+    networkRepository: NetworkRepository,
+    networkHolder: NetworkHolder
+  ) {
+    this.networkHolder = networkHolder;
+    this.networkRepository = networkRepository;
+  }
 
-    public async calculateAvgCloseness(networkContainerResult: NetworkContainerResult) {
-        const averageCloseness : number = await this.networkRepository.calculateAvgCloseness(networkContainerResult);
+  /**
+   * Calculates network average closeness
+   */
+  public async calculateAvgCloseness() {
+    const network = this.networkHolder.getNetwork();
 
-        const networkInfo : NetworkInfoResult = {
-            ...this.networkHolder.getNetwork().Info,
-            averageCloseness
-        };
+    const averageCloseness: number =
+      await this.networkRepository.calculateAvgCloseness(network.network);
 
-        this.networkHolder.onNetworkInfoChanged(networkInfo);
-    }
+    const networkInfo: NetworkInfoResult = {
+      ...network.Info,
+      averageCloseness,
+    };
+
+    this.networkHolder.onNetworkInfoChanged(networkInfo);
+  }
 }
