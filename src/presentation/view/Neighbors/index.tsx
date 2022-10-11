@@ -6,7 +6,7 @@ import {
   InputGroup,
   Line,
 } from "../../../../styles/global";
-import GetNodesNeighborsUseCase from "../../../domain/interactors/Network/Neighbors/GetNodesNeighborsUseCase";
+import GetNodeNeighborsUseCase from "../../../domain/interactors/Network/Neighbors/GetNodeNeighborsUseCase";
 import { NetworkCtx } from "../../util/NetworkCtx";
 import useBaseView from "../../util/useGetBaseView";
 import useGetNetworkFromQuery from "../../util/useGetNetworkFromQuery";
@@ -37,8 +37,8 @@ const NeighborsComponent: FC = () => {
   };
 
   useEffect(() => {
-    const getNodesNeighborsUseCase: GetNodesNeighborsUseCase =
-      new GetNodesNeighborsUseCase(networkHolder.getNetUI());
+    const getNodesNeighborsUseCase: GetNodeNeighborsUseCase =
+      new GetNodeNeighborsUseCase(networkHolder.getNetUI());
 
     const viewModel = new NeighborsViewModelImpl(
       networkHolder,

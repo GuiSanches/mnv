@@ -16,8 +16,8 @@ export const useNetV = (
     return networkHolder.getNetwork();
   }, [networkHolder]);
 
-  const generateNetVData = useCallback(() => {
-    return {
+  const generateNetVData = useCallback(
+    () => ({
       nodes: network.network.nodes.map((n) => ({
         id: n.id,
         x: n.position.x,
@@ -32,8 +32,9 @@ export const useNetV = (
         source: e.source,
         target: e.target,
       })),
-    };
-  }, [network.network]);
+    }),
+    [network.network]
+  );
 
   const generateNetVUI = useCallback(
     (div: HTMLElement, width: number, height: number) => {
@@ -104,7 +105,11 @@ export const useNetV = (
   ) => {
     const network = networkHolder.getNetwork();
 
-    if (network.network) {
+    // Assume two networks with same edges size are equal
+    const compareNetworks = (network: NetworkContainerResult, networkUI: any) =>
+      network.edges.length === networkUI.links().length;
+
+    if (network.network && compareNetworks(network.network, networkUI)) {
       const { nodes, edges } = network.network;
 
       const networkContainer: NetworkContainerResult = {
@@ -119,7 +124,6 @@ export const useNetV = (
         ),
         edges,
       };
-
       networkHolder.updateNetworkTopography(networkContainer);
     }
   };

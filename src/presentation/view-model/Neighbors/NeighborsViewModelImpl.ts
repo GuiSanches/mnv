@@ -1,6 +1,6 @@
 import NetworkHolder from "../../../domain/entity/Network/models/NetworkHolder";
 import NetworkListener from "../../../domain/entity/Network/models/NetworkListener";
-import GetNodesNeighborsUseCase from "../../../domain/interactors/Network/Neighbors/GetNodesNeighborsUseCase";
+import GetNodeNeighborsUseCase from "../../../domain/interactors/Network/Neighbors/GetNodeNeighborsUseCase";
 import BaseView from "../../view/BaseView";
 import NeighborsViewModel from "./NeighborsViewModel";
 
@@ -8,7 +8,7 @@ export default class NeighborsViewModelImpl
   implements NeighborsViewModel, NetworkListener
 {
   private baseView?: BaseView;
-  private getNodesNeighborsUseCase: GetNodesNeighborsUseCase;
+  private getNodesNeighborsUseCase: GetNodeNeighborsUseCase;
   private networkHolder: NetworkHolder;
 
   public readonly type: "network" | "info" = "info";
@@ -18,7 +18,7 @@ export default class NeighborsViewModelImpl
 
   public constructor(
     networkHolder: NetworkHolder,
-    getNodesNeighborsUseCase: GetNodesNeighborsUseCase
+    getNodesNeighborsUseCase: GetNodeNeighborsUseCase
   ) {
     this.getNodesNeighborsUseCase = getNodesNeighborsUseCase;
 

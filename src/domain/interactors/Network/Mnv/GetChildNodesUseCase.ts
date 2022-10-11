@@ -1,11 +1,19 @@
 import NetworkHolder from "../../../entity/Network/models/NetworkHolder";
+import { NodeResult } from "../../../entity/Network/structures/NodeResult";
+import NetworkStyle from "../../common/NetworkStyle";
+import UIProperties from "../../common/UIProperties";
+
+type Layers = {
+  parentUI: any;
+  childUI: any;
+};
+interface MouseEventsParams {
+  parentNode: NodeResult;
+  Layers: Layers;
+  childLinks: any[];
+}
 
 export default class GetChildNodesUseCase {
-  private readonly HIGHLIGHT_OPACITY = 0.5;
-  private readonly UNHIGHLIGHT_OPACITY = 0.01;
-  private readonly STROKE_WIDTH_INCREMENT = 2;
-  private readonly MOUSE_OVER_EVENT = "mouseover";
-  private readonly MOUSE_OUT_EVENT = "mouseout";
   private parentNetwork: NetworkHolder;
 
   public constructor(networkHolder: NetworkHolder) {
@@ -16,87 +24,95 @@ export default class GetChildNodesUseCase {
     if (!netUI) throw new Error("Rede não carregada");
   }
 
-  private setHighlightLink(link: any, opacity: number) {
-    link.strokeColor({
-      ...link.strokeColor(),
-      a: opacity,
-    });
-  }
-
-  private highlightLink(link: any) {
-    this.setHighlightLink(link, this.HIGHLIGHT_OPACITY);
-  }
-
-  private unHighlightLink(link: any) {
-    this.setHighlightLink(link, this.UNHIGHLIGHT_OPACITY);
-  }
-
-  private highlightNodeConnections(node: any, links: any) {
-    const neighborLinks = node.neighborLinks();
-
-    links.forEach((link: any) => this.unHighlightLink(link));
-    neighborLinks.forEach((neighborLink: any) =>
-      this.highlightLink(neighborLink)
-    );
-  }
-
-  private addNodeHighlightMouseEvents(
+  /**
+   * Add node mouse over and mouse out events
+   * @param {any} node Nove UI instance
+   * @param {() => void)} onMouseOver mouseOver callback
+   * @param {() => void)} onMouseOut mouseOut callback
+   */
+  private addEvents(
     node: any,
-    netUI: any,
-    childUI: any,
-    links: any,
-    relatedNodes: any
+    onMouseOver: () => void,
+    onMouseOut: () => void
   ) {
+    node.on(UIProperties.MOUSE_OVER_EVENT, onMouseOver);
+    node.on(UIProperties.MOUSE_OUT_EVENT, onMouseOut);
+  }
+
+  /**
+   * Draw UI layers
+   * @param {Layers} Layers UI wrapper
+   */
+  private drawLayers = (Layers: Layers) => {
+    Layers.parentUI.draw();
+    Layers.childUI.draw();
+  };
+
+  /**
+   * Highlight related nodes
+   * @param {any[] | undefined} relatedNodes Child layer related nodes UI instances
+   * @param {any[]} childLinks Child layer link array
+   */
+  private highlightChildRelatedNodes = (
+    relatedNodes: any[] | undefined,
+    childLinks: any[]
+  ) => {
+    if (relatedNodes)
+      relatedNodes.forEach((node: any) => {
+        const childNeighborLinks = node.neighborLinks();
+        NetworkStyle.highlightConnections(childLinks, childNeighborLinks);
+      });
+  };
+
+  /**
+   * Add parent mouse events
+   */
+  private addNodeHighlightMouseEvents(params: MouseEventsParams) {
+    const { parentNode, Layers, childLinks } = params;
+
+    const node = Layers.parentUI.getNodeById(parentNode.id);
     const strokeWidth = node.strokeWidth();
+    
+    const relatedNodes = parentNode.forward?.map((n) =>
+      Layers.childUI.getNodeById(n.id)
+    );
 
     const onMouseOver = () => {
-      node.strokeWidth(strokeWidth + this.STROKE_WIDTH_INCREMENT);
+      node.strokeWidth(strokeWidth + UIProperties.STROKE_WIDTH_INCREMENT);
 
-      relatedNodes.forEach((node: any) => {
-        this.highlightNodeConnections(node, links);
-      });
+      this.highlightChildRelatedNodes(relatedNodes, childLinks);
 
-      netUI.draw();
-      childUI.draw();
+      this.drawLayers(Layers);
     };
-
     const onMouseOut = () => {
       node.strokeWidth(strokeWidth);
+      NetworkStyle.showLinks(childLinks);
 
-      links.forEach((link: any) => this.highlightLink(link));
-
-      netUI.draw();
-      childUI.draw();
+      this.drawLayers(Layers);
     };
 
-    node.on(this.MOUSE_OVER_EVENT, onMouseOver);
-    node.on(this.MOUSE_OUT_EVENT, onMouseOut);
+    this.addEvents(node, onMouseOver, onMouseOut);
   }
 
+  /**
+   * Enable Child related nodes highlight by mouse interaction
+   */
   public enableChildNodesHighlight() {
     const parentUI = this.parentNetwork.getNetUI();
     this.testNetworkLoaded(parentUI);
 
     const childUI = this.parentNetwork.child?.getNetUI();
     this.testNetworkLoaded(childUI);
-
-    const parentNodes = this.parentNetwork.getNetwork().network.nodes;
     const childLinks = childUI.links();
 
-    parentNodes.forEach((node: any) => {
-      const nodeUI = parentUI.getNodeById(node.id);
+    const parentNodes = this.parentNetwork.getNetwork().network.nodes;
 
-      const relatedNodes = node.forward?.map((n: any) =>
-        childUI.getNodeById(n.id)
-      );
-
-      this.addNodeHighlightMouseEvents(
-        nodeUI,
-        parentUI,
-        childUI,
+    parentNodes.forEach((parentNode) => {
+      this.addNodeHighlightMouseEvents({
+        parentNode,
+        Layers: { parentUI, childUI },
         childLinks,
-        relatedNodes
-      );
+      });
     });
   }
 }

@@ -51,6 +51,7 @@ export default class NetworkHolder {
    */
   public onNetworkContainerChanged(network: NetworkContainerResult): void {
     this.network.network = network;
+
     this.notifyContainerListeners();
     this.onNetworkInfoChanged({});
   }
@@ -61,6 +62,7 @@ export default class NetworkHolder {
    */
   public updateNetworkTopography(network: NetworkContainerResult): void {
     this.network.network = network;
+
     this.notifyContainerListeners();
   }
 
