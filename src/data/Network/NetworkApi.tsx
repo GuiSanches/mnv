@@ -31,7 +31,7 @@ type InfoMethods = "averageBetweenness" | "averageDegree" | "averageCloseness";
  * Network repository implementation
  */
 export default class NetworkApi implements NetworkRepository {
-  private readonly API_URL = "http://localhost:5000";
+  private readonly API_URL = "https://mnv-backend.herokuapp.com";
   private client: AxiosInstance;
 
   public constructor() {
